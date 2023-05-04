@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+$primaryColorLight: #8fd0fb;
+$primaryColor: #209cee;
+$primaryColorDark: #038ae4;
+$secondaryColorLight: #d4fcd8;
+$secondaryColor: #2eae3e;
+$secondaryColorMediumLight: #32dc49;
+$secondaryColorDark: #07981b;
+$whiteColor: #ffffff;
+$blackColor: #000000;
+$grayColor: #d4d3d3;
+$grayColorDark: #8f8888;
+
+.logo {
+    font-family: "Nunito", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: $primaryColor;
+    margin: 0 0.5rem;
+    display: inline-block;
+    span {
+        color: $secondaryColor;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+}
+
+label {
+    font-family: "Nunito", sans-serif;
+    font-weight: 500;
+}
+
+ul {
+    list-style-type: none;
+}
+.link.header-link {
+    color: $secondaryColorDark;
+}
+
+.link.header-link:hover {
+    background-color: $secondaryColorLight;
+}
+
+.link.header-link.active {
+    background-color: $secondaryColorLight;
+    border-bottom: 2px solid $secondaryColorDark;
+}
+
+.link {
+    text-decoration: none;
+    color: $primaryColor;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5em;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border: 5px solid $whiteColor;
+    cursor: pointer;
+}
+
+.btn.btn-primary {
+    background-color: $primaryColor;
+    border-radius: 5px;
+    color: $whiteColor;
+}
+
+.btn.btn-primary:hover {
+    border: 5px solid $primaryColorLight;
+}
+
+.btn.btn-secondary {
+    background-color: $secondaryColor;
+    border-radius: 5px;
+    color: $whiteColor;
+}
+
+.btn.btn-secondary:hover {
+    border: 5px solid $secondaryColorLight;
+}
+
+.page-wrapper {
+    margin: 2rem 1rem;
+}
