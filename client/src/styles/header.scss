@@ -25,4 +25,30 @@
             margin: 0 0.2em;
         }
     }
+
+    .header-right-container {
+        .profile-container {
+            display: flex;
+            gap: 1em;
+            align-items: center;
+
+            .profile {
+                display: flex;
+                gap: 0.5em;
+                align-items: center;
+                .profile-name {
+                    background-color: $secondaryColor;
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $whiteColor;
+                    font-weight: 500;
+                    font-size: 1.2rem;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
 }

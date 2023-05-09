@@ -3,7 +3,8 @@ import CandidateLoginPage from "./CandidateLoginPage";
 import ClientLoginPage from "./ClientLoginPage";
 import IntroPage from "./IntroPage";
 import AdminLoginPage from "./AdminLoginPage";
-import Dashboard from "./Dashboard";
 import ErrorPage from "./ErrorPage";
+import Dashboard from "./Dashboard";
+import ClientSharedLayout from "./ClientSharedLayout";
 
-export { JobSearchPage, CandidateLoginPage, ClientLoginPage, IntroPage, AdminLoginPage, Dashboard, ErrorPage };
+export { JobSearchPage, CandidateLoginPage, ClientLoginPage, IntroPage, AdminLoginPage, Dashboard, ErrorPage, ClientSharedLayout };

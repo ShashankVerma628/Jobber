@@ -14,7 +14,8 @@ import {
     CANDIDATE_LOGIN_SUCCESS,
     CANDIDATE_REGISTER_SUCCESS,
     SET_AUTH_FORM_DATA,
-    LOGOUT_USER
+    LOGOUT_USER,
+    SET_JOB_FORM_DATA
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -27,6 +28,15 @@ const initialAuthFormData = {
     password: "",
 };
 
+const initialJobFormData = {
+    position: "",
+    jobDescription: "",
+    skills: "",
+    company: user?.company || null,
+    createdBy: user?._id || null,
+    jobType: "remote"
+};
+
 const initialState = {
     isLoading: false,
     showAlert: false,
@@ -34,7 +44,9 @@ const initialState = {
     alertText: "",
     user,
     token,
-    authFormData: initialAuthFormData
+    authFormData: initialAuthFormData,
+    jobFormData: initialJobFormData,
+    isEditJob: false,
 };
 
 const appContext = createContext();
@@ -67,6 +79,10 @@ const AppProvider = ({ children }) => {
 
     const setAuthFormData = (values) => {
         dispatch({ type: SET_AUTH_FORM_DATA, payload: { values } });
+    }
+
+    const setJobFormData = (values) => {
+        dispatch({ type: SET_JOB_FORM_DATA, payload: { values } })
     }
 
     // to register a candidate
@@ -140,6 +156,11 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    // to add job by client
+    const addJob = (newJob) => {
+        console.log("add job");
+    }
+
     return <appContext.Provider value={{
         ...state,
         setAuthFormData,
@@ -149,6 +170,8 @@ const AppProvider = ({ children }) => {
         logoutUser,
         loginClient,
         registerClient,
+        setJobFormData,
+        addJob
     }}>
         {children}
     </appContext.Provider>
@@ -158,4 +181,4 @@ const useAppContext = () => {
     return useContext(appContext);
 }
 
-export { initialState, AppProvider, useAppContext, initialAuthFormData };
+export { initialState, AppProvider, useAppContext, initialAuthFormData, initialJobFormData }; 

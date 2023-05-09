@@ -1,0 +1,49 @@
+.small-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    min-height: 100vh;
+    position: absolute;
+    background-color: $whiteColor;
+    width: 100%;
+    z-index: 99;
+    transform: translate(-100%);
+
+    &.active {
+        transform: translate(0);
+    }
+
+    @media (min-width: $sm) {
+        display: none;
+    }
+
+    .sidebar-links-container {
+        margin: 3rem 0;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.8em;
+
+        .sidebar-link {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            text-transform: capitalize;
+            color: $primaryColorDark;
+            padding: 0.5em 0;
+            gap: 0.5em;
+            justify-content: center;
+
+            &:hover {
+                background: $primaryColorDark;
+                color: $whiteColor;
+            }
+
+            &.active {
+                background: $primaryColorDark;
+                color: $whiteColor;
+            }
+        }
+    }
+}

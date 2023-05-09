@@ -1,4 +1,4 @@
-import { initialState, initialAuthFormData } from "./appContext";
+import { initialState, initialAuthFormData, initialJobFormData } from "./appContext";
 
 import {
     CLEAR_ALERT,
@@ -12,7 +12,8 @@ import {
     CANDIDATE_LOGIN_SUCCESS,
     CANDIDATE_REGISTER_SUCCESS,
     LOGOUT_USER,
-    SET_AUTH_FORM_DATA
+    SET_AUTH_FORM_DATA,
+    SET_JOB_FORM_DATA
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -40,7 +41,14 @@ const reducer = (state, action) => {
             authFormData: action.payload.values
         }
     }
-    
+
+    if (action.type === SET_JOB_FORM_DATA) {
+        return {
+            ...state,
+            jobFormData: action.payload.values
+        }
+    }
+
     if (action.type === AUTH_BEGIN) {
         return {
             ...state,
@@ -58,7 +66,7 @@ const reducer = (state, action) => {
         }
     }
 
-    
+
     // for candidates
     if (action.type === CANDIDATE_REGISTER_SUCCESS) {
         return {
@@ -118,7 +126,7 @@ const reducer = (state, action) => {
             ...state,
             showAlert: true,
             alertType: "success",
-            alertText: "You have been logged out,Redirecting....",
+            alertText: "You have been logged out...",
             user: null,
             token: null
         }

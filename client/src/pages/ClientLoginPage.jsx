@@ -49,7 +49,7 @@ const ClientLoginPage = () => {
     if (user) {
       setTimeout(() => {
         navigate("/client/dashboard");
-      }, 4000);
+      }, 3000);
     }
   }, [user]);
 

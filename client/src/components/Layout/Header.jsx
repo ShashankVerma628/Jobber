@@ -20,12 +20,18 @@ const Header = () => {
         </div>
         <div className="header-right-container">
           {user ? (
-            <button
-              onClick={() => logoutUser()}
-              className="btn header-btn btn-primary"
-            >
-              Logout
-            </button>
+            <div className="profile-container">
+              <div className="profile">
+                  <span className="profile-name">{user?.name.charAt(0)}</span>
+                  {user?.name}
+              </div>
+              <button
+                onClick={() => logoutUser()}
+                className="btn header-btn btn-primary"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <Link to="/login" className="btn header-btn btn-primary">
               Login / Register

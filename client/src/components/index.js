@@ -6,5 +6,13 @@ import FormInput from "./Form/FormInput";
 import FormButton from "./Form/FormButton";
 import Alert from "./Alert";
 import AuthForm from "./Form/AuthForm";
+import AddJob from "./Client/AddJob";
+import Profile from "./Client/Profile";
+import AllJobs from "./Client/AllJobs";
+import JobDetails from "./Client/JobDetails";
+import ClientStats from "./Client/ClientStats";
+import SmallSidebar from "./Layout/SmallSidebar";
+import BigSidebar from "./Layout/BigSidebar";
+import EditJob from "./Client/EditJob";
 
-export { Footer, Header, Logo, Loader, FormInput, FormButton, Alert, AuthForm };
+export { Footer, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar };

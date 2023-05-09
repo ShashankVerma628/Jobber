@@ -32,10 +32,6 @@ const JobSchema = new mongoose.Schema({
         type: String,
         enum: ["on-site", "remote", "hybrid", "freelancing"],
         default: "on-site"
-    },
-    applicants: {
-        type: [String],
-        default: []
     }
 }, { timestamps: true });
 

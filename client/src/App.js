@@ -1,5 +1,9 @@
-import { Header, Footer } from "./components";
-import { JobSearchPage, ClientLoginPage, ErrorPage, Dashboard, CandidateLoginPage, IntroPage, AdminLoginPage } from "./pages";
+import { Header, Footer, AllJobs, AddJob, Profile, JobDetails, ClientStats, EditJob } from "./components";
+import { JobSearchPage, ClientLoginPage, ErrorPage, Dashboard, CandidateLoginPage, IntroPage, AdminLoginPage, ClientSharedLayout } from "./pages";
+
+import ProtectedClientRoute from "./utils/ProtectedClientRoute";
+import ProtectedCandidateRoute from "./utils/ProtectedCandidateRoute";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
@@ -13,7 +17,23 @@ function App() {
           <Route path="/client/login" element={<ClientLoginPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/why-jobber" element={<IntroPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <ProtectedCandidateRoute>
+              <Dashboard />
+            </ProtectedCandidateRoute>
+          } />
+          <Route path="/client/dashboard/" element={
+            <ProtectedClientRoute>
+              <ClientSharedLayout />
+            </ProtectedClientRoute>
+          }>
+            <Route index element={<ClientStats />} />
+            <Route path="all-jobs" element={<AllJobs />} />
+            <Route path="add-job" element={<AddJob />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="edit-job/:jobId" element={<EditJob />} />
+            <Route path="job/:jobId" element={<JobDetails />} />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <Footer />

@@ -53,7 +53,7 @@ const LoginPage = () => {
     if (user) {
       setTimeout(() => {
         navigate("/dashboard");
-      }, 4000);
+      }, 3000);
     }
   }, [user]);
 
