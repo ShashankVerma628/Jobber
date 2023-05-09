@@ -1,32 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FormInput, FormButton } from "../components";
+import { AuthForm } from "../components";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 
-const initialState = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-};
-
 const LoginPage = () => {
   const [signUp, setSignup] = useState(false);
-  const [values, setValues] = useState(initialState);
 
   const navigate = useNavigate();
 
-  const { displayAlert, registerCandidate, user, isLoggedIn, loginCandidate } =
-    useAppContext();
-
-  const handleInputChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  const {
+    displayAlert,
+    registerCandidate,
+    user,
+    authFormData,
+    loginCandidate,
+  } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { firstName, lastName, email, password } = values;
+    const { firstName, lastName, email, password } = authFormData;
 
     if (signUp) {
       if (!firstName || !lastName || !email || !password) {
@@ -87,43 +80,7 @@ const LoginPage = () => {
             </li>
           </ul>
         </div>
-        <div className="login-form-wrapper">
-          <form className="auth-form-container" onSubmit={handleSubmit}>
-            {signUp && (
-              <div className="name-container">
-                <FormInput
-                  width="half"
-                  labelText="First Name"
-                  name="firstName"
-                  onInputChange={handleInputChange}
-                  value={values?.firstName}
-                />
-                <FormInput
-                  width="half"
-                  labelText="Last Name"
-                  name="lastName"
-                  onInputChange={handleInputChange}
-                  value={values?.lastName}
-                />
-              </div>
-            )}
-            <FormInput
-              labelText="Email Address"
-              name="email"
-              type="email"
-              onInputChange={handleInputChange}
-              value={values?.email}
-            />
-            <FormInput
-              type="password"
-              labelText="Password"
-              name="password"
-              onInputChange={handleInputChange}
-              value={values?.password}
-            />
-            <FormButton type="submit" text={signUp ? "Register" : "Login"} />
-          </form>
-        </div>
+        <AuthForm handleSubmit={handleSubmit} signUp={signUp} />
         <div className="change-auth-container">
           <p>
             {signUp

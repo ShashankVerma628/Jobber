@@ -1,24 +1,18 @@
-import { initialState } from "./appContext";
+import { initialState, initialAuthFormData } from "./appContext";
 
 import {
     CLEAR_ALERT,
     DISPLAY_ALERT,
-    ADMIN_REGISTER_BEGIN,
+    AUTH_BEGIN,
+    AUTH_ERROR,
     ADMIN_REGISTER_SUCCESS,
-    ADMIN_REGISTER_ERROR,
-    ADMIN_LOGIN_BEGIN,
-    ADMIN_LOGIN_ERROR,
     ADMIN_LOGIN_SUCCESS,
-    CLIENT_LOGIN_BEGIN,
-    CLIENT_LOGIN_ERROR,
     CLIENT_LOGIN_SUCCESS,
-    CANDIDATE_LOGIN_BEGIN,
-    CANDIDATE_LOGIN_ERROR,
+    CLIENT_REGISTER_SUCCESS,
     CANDIDATE_LOGIN_SUCCESS,
-    CANDIDATE_REGISTER_BEGIN,
-    CANDIDATE_REGISTER_ERROR,
     CANDIDATE_REGISTER_SUCCESS,
-    LOGOUT_USER
+    LOGOUT_USER,
+    SET_AUTH_FORM_DATA
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -40,26 +34,21 @@ const reducer = (state, action) => {
         }
     }
 
-    if (action.type === CANDIDATE_REGISTER_BEGIN) {
+    if (action.type === SET_AUTH_FORM_DATA) {
+        return {
+            ...state,
+            authFormData: action.payload.values
+        }
+    }
+    
+    if (action.type === AUTH_BEGIN) {
         return {
             ...state,
             isLoading: true,
         }
     }
 
-    if (action.type === CANDIDATE_REGISTER_SUCCESS) {
-        return {
-            ...state,
-            isLoading: false,
-            showAlert: true,
-            alertType: "success",
-            alertText: "Candidate Registration Successful, Redirecting...",
-            user: action.payload.user,
-            token: action.payload.token
-        }
-    }
-
-    if (action.type === CANDIDATE_REGISTER_ERROR) {
+    if (action.type === AUTH_ERROR) {
         return {
             ...state,
             isLoading: false,
@@ -69,10 +58,18 @@ const reducer = (state, action) => {
         }
     }
 
-    if (action.type === CANDIDATE_LOGIN_BEGIN) {
+    
+    // for candidates
+    if (action.type === CANDIDATE_REGISTER_SUCCESS) {
         return {
             ...state,
-            isLoading: true,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Candidate Registration Successful, Redirecting...",
+            user: action.payload.user,
+            token: action.payload.token,
+            authFormData: initialAuthFormData
         }
     }
 
@@ -84,17 +81,35 @@ const reducer = (state, action) => {
             alertType: "success",
             alertText: "Login Successful, Redirecting...",
             user: action.payload.user,
-            token: action.payload.token
+            token: action.payload.token,
+            authFormData: initialAuthFormData
         }
     }
 
-    if (action.type === CANDIDATE_LOGIN_ERROR) {
+
+    if (action.type === CLIENT_REGISTER_SUCCESS) {
         return {
             ...state,
             isLoading: false,
             showAlert: true,
-            alertType: "danger",
-            alertText: action.payload.message
+            alertType: "success",
+            alertText: "Client Registration Successful, Redirecting...",
+            user: action.payload.user,
+            token: action.payload.token,
+            authFormData: initialAuthFormData
+        }
+    }
+
+    if (action.type === CLIENT_LOGIN_SUCCESS) {
+        return {
+            ...state,
+            isLoading: true,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Login Successful, Redirecting...",
+            user: action.payload.user,
+            token: action.payload.token,
+            authFormData: initialAuthFormData
         }
     }
 

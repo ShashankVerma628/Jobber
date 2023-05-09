@@ -1,4 +1,4 @@
-import { Header, Footer, Alert } from "./components";
+import { Header, Footer } from "./components";
 import { JobSearchPage, ClientLoginPage, ErrorPage, Dashboard, CandidateLoginPage, IntroPage, AdminLoginPage } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
@@ -6,7 +6,6 @@ function App() {
   return (
     <div className="wrapper">
       <BrowserRouter>
-        <Alert />
         <Header />
         <Routes>
           <Route path="/" element={<JobSearchPage />} />

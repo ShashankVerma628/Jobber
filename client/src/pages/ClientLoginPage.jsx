@@ -1,13 +1,58 @@
-import { Link } from "react-router-dom";
-import { FormButton, FormInput } from "../components";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthForm } from "../components";
+import { useEffect, useState } from "react";
+import { useAppContext } from "../context/appContext";
 
-const LoginClientPage = () => {
+const ClientLoginPage = () => {
   const [signUp, setSignup] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { authFormData, user, displayAlert, registerClient, loginClient } =
+    useAppContext();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const { firstName, lastName, email, password } = authFormData;
+
+    if (signUp) {
+      if (!firstName || !lastName || !email || !password) {
+        displayAlert();
+      } else {
+        const name = `${firstName} ${lastName}`;
+
+        const newClient = {
+          name,
+          email,
+          password,
+        };
+
+        registerClient(newClient);
+      }
+    } else {
+      console.log(email, password);
+      if (!email || !password) {
+        displayAlert();
+      } else {
+        const client = {
+          email,
+          password,
+        };
+
+        loginClient(client);
+      }
+    }
   };
-  const handleInputChange = () => {};
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/client/dashboard");
+      }, 4000);
+    }
+  }, [user]);
+
   return (
     <div className="page-wrapper wrapper">
       <div className="login-page-container">
@@ -31,39 +76,7 @@ const LoginClientPage = () => {
             </li>
           </ul>
         </div>
-        <div className="login-form-wrapper">
-          <form className="auth-form-container" onSubmit={handleSubmit}>
-            {signUp && (
-              <div className="name-container">
-                <FormInput
-                  width="half"
-                  labelText="First Name"
-                  name="fistName"
-                  onInputChange={handleInputChange}
-                />
-                <FormInput
-                  width="half"
-                  labelText="Last Name"
-                  name="lastName"
-                  onInputChange={handleInputChange}
-                />
-              </div>
-            )}
-            <FormInput
-              labelText="Email Address"
-              name="email"
-              type="email"
-              onInputChange={handleInputChange}
-            />
-            <FormInput
-              type="password"
-              labelText="Password"
-              name="password"
-              onInputChange={handleInputChange}
-            />
-            <FormButton type="button" text={signUp ? "Register" : "Login"} />
-          </form>
-        </div>
+        <AuthForm handleSubmit={handleSubmit} signUp={signUp} />
         <div className="change-auth-container">
           <p>
             {signUp
@@ -82,4 +95,4 @@ const LoginClientPage = () => {
   );
 };
 
-export default LoginClientPage;
+export default ClientLoginPage;

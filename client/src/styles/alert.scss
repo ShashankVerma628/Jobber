@@ -1,18 +1,11 @@
 .alert-container {
-    position: absolute;
-    max-width: 500px;
-    min-width: 300px;
-    transition: all 0.3s ease-in-out;
-    transform: translateX(300px);
-    top: 100px;
-    right: 0;
     font-weight: 500;
     padding: 0.5em 1em;
-    right: 0px;
+    display: none;
 }
 
 .alert-container.active {
-    transform: translateX(0);
+    display: block;
 }
 
 .alert-container.danger {

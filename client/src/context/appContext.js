@@ -5,26 +5,27 @@ import axios from "axios";
 import {
     CLEAR_ALERT,
     DISPLAY_ALERT,
-    ADMIN_REGISTER_BEGIN,
+    AUTH_BEGIN,
+    AUTH_ERROR,
     ADMIN_REGISTER_SUCCESS,
-    ADMIN_REGISTER_ERROR,
-    ADMIN_LOGIN_BEGIN,
-    ADMIN_LOGIN_ERROR,
     ADMIN_LOGIN_SUCCESS,
-    CLIENT_LOGIN_BEGIN,
-    CLIENT_LOGIN_ERROR,
     CLIENT_LOGIN_SUCCESS,
-    CANDIDATE_LOGIN_BEGIN,
-    CANDIDATE_LOGIN_ERROR,
+    CLIENT_REGISTER_SUCCESS,
     CANDIDATE_LOGIN_SUCCESS,
-    CANDIDATE_REGISTER_ERROR,
-    CANDIDATE_REGISTER_BEGIN,
     CANDIDATE_REGISTER_SUCCESS,
+    SET_AUTH_FORM_DATA,
     LOGOUT_USER
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
 const token = localStorage.getItem("token") || null;
+
+const initialAuthFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+};
 
 const initialState = {
     isLoading: false,
@@ -32,7 +33,8 @@ const initialState = {
     alertType: "",
     alertText: "",
     user,
-    token
+    token,
+    authFormData: initialAuthFormData
 };
 
 const appContext = createContext();
@@ -63,9 +65,13 @@ const AppProvider = ({ children }) => {
         localStorage.removeItem("token");
     }
 
+    const setAuthFormData = (values) => {
+        dispatch({ type: SET_AUTH_FORM_DATA, payload: { values } });
+    }
+
     // to register a candidate
     const registerCandidate = async (newCandidate) => {
-        dispatch({ type: CANDIDATE_REGISTER_BEGIN });
+        dispatch({ type: AUTH_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/register`, newCandidate);
             const { user, token } = data;
@@ -74,7 +80,7 @@ const AppProvider = ({ children }) => {
             dispatch({ type: CANDIDATE_REGISTER_SUCCESS, payload: { user, token } });
         } catch (error) {
             dispatch({
-                type: CANDIDATE_REGISTER_ERROR,
+                type: AUTH_ERROR,
                 payload: { message: error.response.data.message }
             });
         }
@@ -83,14 +89,46 @@ const AppProvider = ({ children }) => {
 
     // to login a candidate
     const loginCandidate = async (candidate) => {
-        dispatch({ type: CANDIDATE_LOGIN_BEGIN });
+        dispatch({ type: AUTH_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/login`, candidate);
             const { user, token } = data;
             addUserToLocalStorage({ user, token });
             dispatch({ type: CANDIDATE_LOGIN_SUCCESS, payload: { user, token } });
         } catch (error) {
-            dispatch({ type: CANDIDATE_LOGIN_ERROR, payload: { message: error.response.data.message } });
+            dispatch({ type: AUTH_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    // to login a client
+    const loginClient = async (client) => {
+        dispatch({ type: AUTH_BEGIN });
+        try {
+            const { data } = await axios.post(`/api/v1/auth/client/login`, client);
+            const { user, token } = data;
+            addUserToLocalStorage({ user, token });
+            dispatch({ type: CLIENT_LOGIN_SUCCESS, payload: { user, token } });
+        } catch (error) {
+            dispatch({ type: AUTH_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    // to register a client
+    const registerClient = async (newClient) => {
+        dispatch({ type: AUTH_BEGIN });
+        try {
+            const { data } = await axios.post(`/api/v1/auth/client/register`, newClient);
+            const { user, token } = data;
+
+            addUserToLocalStorage({ user, token });
+            dispatch({ type: CLIENT_REGISTER_SUCCESS, payload: { user, token } });
+        } catch (error) {
+            dispatch({
+                type: AUTH_ERROR,
+                payload: { message: error.response.data.message }
+            });
         }
         clearAlert();
     }
@@ -104,10 +142,13 @@ const AppProvider = ({ children }) => {
 
     return <appContext.Provider value={{
         ...state,
+        setAuthFormData,
         displayAlert,
         registerCandidate,
         loginCandidate,
-        logoutUser
+        logoutUser,
+        loginClient,
+        registerClient,
     }}>
         {children}
     </appContext.Provider>
@@ -117,4 +158,4 @@ const useAppContext = () => {
     return useContext(appContext);
 }
 
-export { initialState, AppProvider, useAppContext };
+export { initialState, AppProvider, useAppContext, initialAuthFormData };
