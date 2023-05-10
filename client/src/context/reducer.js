@@ -16,7 +16,8 @@ import {
     SET_JOB_FORM_DATA,
     ADD_JOB_SUCCESS,
     GET_JOBS_SUCCESS,
-    GET_CLIENT_JOBS_SUCCESS
+    GET_CLIENT_JOBS_SUCCESS,
+    GET_ALL_JOBS_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -114,7 +115,7 @@ const reducer = (state, action) => {
     if (action.type === CLIENT_LOGIN_SUCCESS) {
         return {
             ...state,
-            isLoading: true,
+            isLoading: false,
             showAlert: true,
             alertType: "success",
             alertText: "Login Successful, Redirecting...",
@@ -127,6 +128,7 @@ const reducer = (state, action) => {
     if (action.type === LOGOUT_USER) {
         return {
             ...state,
+            isLoading: false,
             showAlert: true,
             alertType: "success",
             alertText: "You have been logged out...",
@@ -138,9 +140,29 @@ const reducer = (state, action) => {
     if (action.type === ADD_JOB_SUCCESS) {
         return {
             ...state,
+            isLoading: false,
             showAlert: true,
             alertType: "success",
             alertText: "Job has been created.",
+        }
+    }
+
+    if (action.type === GET_JOBS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            clientJobs: action.payload.jobs,
+            clientJobsCount: action.payload.count
+        }
+    }
+
+    if (action.type === GET_ALL_JOBS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: false,
+            allJobs: action.payload.jobs,
+            allJobsCount: action.payload.count
         }
     }
 }

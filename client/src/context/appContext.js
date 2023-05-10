@@ -18,7 +18,8 @@ import {
     SET_JOB_FORM_DATA,
     ADD_JOB_SUCCESS,
     GET_CLIENT_JOBS_SUCCESS,
-    GET_JOBS_SUCCESS
+    GET_JOBS_SUCCESS,
+    GET_ALL_JOBS_SUCCESS,
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -35,7 +36,9 @@ const initialJobFormData = {
     position: "",
     jobDescription: "",
     skills: "",
-    jobType: "remote"
+    jobType: "remote",
+    jobLocation: "",
+    salary: ""
 };
 
 const initialState = {
@@ -48,6 +51,10 @@ const initialState = {
     authFormData: initialAuthFormData,
     jobFormData: initialJobFormData,
     isEditJob: false,
+    allJobs: [],
+    allJobsCount: 0,
+    clientJobs: [],
+    clientJobsCount: 0
 };
 
 const appContext = createContext();
@@ -71,8 +78,8 @@ const AppProvider = ({ children }) => {
         return response;
     }, (error) => {
         if (error.response.status === 401) {
-            // logoutUser();
             console.log(error);
+            logoutUser();
         }
         return Promise.reject(error);
     });
@@ -183,22 +190,39 @@ const AppProvider = ({ children }) => {
         setJobFormData(initialJobFormData);
     }
 
+    // to get all jobs
+    const getAllJobs = async () => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await axios.get("/api/v1/jobs");
+            const { count, jobs } = data;
+            dispatch({ type: GET_ALL_JOBS_SUCCESS, payload: { jobs, count } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+    }
+
+    // to get jobs particular to a client
     const getJobs = async () => {
         dispatch({ type: API_REQUEST_BEGIN });
         try {
-            const { data } = await authFetch.post(`/jobs/client/${state.user?._id}`);
-            dispatch({ type: GET_CLIENT_JOBS_SUCCESS, payload: { clientJobs: data } });
+            const { data } = await authFetch.get(`/jobs/client/${state.user?._id}`);
+            const { count, jobs } = data;
+            dispatch({ type: GET_JOBS_SUCCESS, payload: { jobs, count } });
         } catch (error) {
-            dispatch({ type: API_REQUEST_ERROR });
+            console.log(error);
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
         }
     }
+
 
     // to add job by client
     const addJob = async (newJob) => {
         dispatch({ type: API_REQUEST_BEGIN });
         try {
             const { data } = await authFetch.post("/jobs", newJob);
-            // getJobs();
+            getJobs();
+            getAllJobs();
             dispatch({ type: ADD_JOB_SUCCESS });
         } catch (error) {
             dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
@@ -217,7 +241,10 @@ const AppProvider = ({ children }) => {
         registerClient,
         setJobFormData,
         addJob,
-        clearJobForm
+        clearJobForm,
+        getAllJobs,
+        getJobs,
+        logoutUser
     }}>
         {children}
     </appContext.Provider>

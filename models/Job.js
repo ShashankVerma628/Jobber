@@ -32,6 +32,14 @@ const JobSchema = new mongoose.Schema({
         type: String,
         enum: ["on-site", "remote", "hybrid", "freelancing"],
         default: "on-site"
+    },
+    salary: {
+        type: String,
+        required: [true, "Please provide salary"]
+    },
+    jobLocation: {
+        type: String,
+        required: [true, "Please provide job location"]
     }
 }, { timestamps: true });
 

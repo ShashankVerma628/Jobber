@@ -7,10 +7,12 @@ const AddJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { position, jobDescription, jobType } = jobFormData;
-    let { skills } = jobFormData;
+    const { position, jobDescription, jobType, jobLocation } = jobFormData;
+    let { skills, salary } = jobFormData;
+    salary = `${salary} Lakh/Year INR`;
 
     if (!position || !jobDescription || skills.length === 0 || !jobType) {
+      console.log("bro");
       displayAlert();
     } else {
       const newJob = {
@@ -18,6 +20,8 @@ const AddJob = () => {
         jobDescription,
         skills,
         jobType,
+        salary,
+        jobLocation,
       };
       addJob(newJob);
       clearJobForm();

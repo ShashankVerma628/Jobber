@@ -1,4 +1,12 @@
-const FormInput = ({ width, labelText, name, type, onInputChange, value }) => {
+const FormInput = ({
+  width,
+  labelText,
+  name,
+  type,
+  onInputChange,
+  placeholderText,
+  value,
+}) => {
   return (
     <div className={`form-input-container ${width || "full"}`}>
       <label htmlFor={name}>{labelText}</label>
@@ -7,7 +15,7 @@ const FormInput = ({ width, labelText, name, type, onInputChange, value }) => {
         type={type || "text"}
         name={name}
         id={name}
-        placeholder={labelText}
+        placeholder={placeholderText || labelText}
         onChange={onInputChange}
         value={value}
       />

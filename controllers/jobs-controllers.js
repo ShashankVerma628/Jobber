@@ -38,9 +38,9 @@ const createJob = async (req, res) => {
     req.body.createdBy = req.user.userId;
     req.body.company = req.user.company;
 
-    const { position, jobDescription, skills, createdBy, company } = req.body;
+    let { position, jobDescription, skills, createdBy, company, salary, jobLocation } = req.body;
 
-    if (!position || !jobDescription || !skills || !createdBy || !company) {
+    if (!position || !jobDescription || skills.length === 0 || !createdBy || !company || !salary || !jobLocation) {
         throw new BadRequestError("Please provide all values");
     }
 
@@ -60,11 +60,11 @@ const editJob = async (req, res) => {
 
     checkClientPermissions(req.user, job.createdBy);
 
-    // const { position, jobDescription, skills } = req.body;
+    const { position, jobDescription, skills } = req.body;
 
-    // if (!position || !jobDescription || !skills) {
-    //     throw new BadRequestError("Please provide all values");
-    // }
+    if (!position || !jobDescription || !skills) {
+        throw new BadRequestError("Please provide all values");
+    }
 
     job = await Job.findByIdAndUpdate(jobId, req.body, { new: true, runValidators: true });
 

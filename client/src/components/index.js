@@ -14,5 +14,6 @@ import ClientStats from "./Client/ClientStats";
 import SmallSidebar from "./Layout/SmallSidebar";
 import BigSidebar from "./Layout/BigSidebar";
 import EditJob from "./Client/EditJob";
+import JobsList from "./JobsList";
 
-export { Footer, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar };
+export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar };

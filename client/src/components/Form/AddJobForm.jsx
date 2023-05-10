@@ -35,8 +35,28 @@ const AddJobForm = ({ handleSubmit }) => {
           type="skills"
           labelText="Skills"
           name="skills"
-          onInputChange={handleInputChange}
+          onInputChange={(e) =>
+            setJobFormData({
+              ...jobFormData,
+              skills: e.target.value.split(","),
+            })
+          }
           value={jobFormData?.skills}
+        />
+        <FormInput
+          type="jobLocation"
+          labelText="Job Location"
+          name="jobLocation"
+          onInputChange={handleInputChange}
+          value={jobFormData?.jobLocation}
+        />
+        <FormInput
+          type="salary"
+          labelText="Salary"
+          name="salary"
+          onInputChange={handleInputChange}
+          value={jobFormData?.salary}
+          placeholderText="Please enter salary in LPA"
         />
         <FormSelect
           label="Job Type"
