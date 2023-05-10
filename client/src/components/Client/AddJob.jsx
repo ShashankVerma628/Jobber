@@ -2,26 +2,25 @@ import AddJobForm from "../Form/AddJobForm";
 import { useAppContext } from "../../context/appContext";
 
 const AddJob = () => {
-  const { jobFormData, displayAlert, addJob } = useAppContext();
+  const { jobFormData, displayAlert, addJob, clearJobForm } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { position, jobDescription, skills, company, createdBy, jobType } =
-      jobFormData;
+    const { position, jobDescription, jobType } = jobFormData;
+    let { skills } = jobFormData;
 
-    if (
-      !position ||
-      !jobDescription ||
-      !skills ||
-      !company ||
-      !createdBy ||
-      !jobType
-    ) {
+    if (!position || !jobDescription || skills.length === 0 || !jobType) {
       displayAlert();
     } else {
-      const newJob = jobFormData;
+      const newJob = {
+        position,
+        jobDescription,
+        skills,
+        jobType,
+      };
       addJob(newJob);
+      clearJobForm();
     }
   };
 

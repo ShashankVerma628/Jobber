@@ -1,0 +1,58 @@
+.form-wrapper {
+    margin: 2rem 0;
+
+    .form-container {
+        .name-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-input-container {
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            .form-input {
+                width: 100%;
+                padding: 0.8em 1em;
+                border-radius: 5px;
+                outline: none;
+                border: 1px solid $grayColorDark;
+            }
+            &.half {
+                width: 45%;
+                display: inline-block;
+            }
+        }
+
+        .btn-secondary {
+            font-size: 1.2rem;
+            &.disabled {
+                background-color: $secondaryColorMediumLight;
+                cursor: not-allowed;
+            }
+        }
+    }
+    .input-textarea {
+        .job-desc {
+            height: 100px;
+        }
+    }
+
+    textarea {
+        padding: 0.8em 1em;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid $grayColorDark;
+    }
+
+    .form-select {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        select {
+            padding: 0.8em 1em;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid $grayColorDark;
+        }
+    }
+}

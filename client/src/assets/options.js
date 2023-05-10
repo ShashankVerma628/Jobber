@@ -1,6 +1,6 @@
 export const options = [
-    { label: "On Site", value: "on-site" },
-    { label: "Remote", value: "remote" },
-    { label: "Hybrid", value: "hybrid" },
-    { label: "Freelancing", value: "freelancing" },
+    { id: 1, label: "On Site", value: "on-site" },
+    { id: 2, label: "Remote", value: "remote" },
+    { id: 3, label: "Hybrid", value: "hybrid" },
+    { id: 4, label: "Freelancing", value: "freelancing" },
 ];

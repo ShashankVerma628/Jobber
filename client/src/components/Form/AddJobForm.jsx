@@ -21,9 +21,9 @@ const AddJobForm = ({ handleSubmit }) => {
     setJobFormData({ ...jobFormData, [e.target.name]: e.target.value });
   };
   return (
-    <div className="login-form-wrapper">
+    <div className="form-wrapper">
       <Alert />
-      <form className="auth-form-container" onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <FormInput
           labelText="Job Title"
           name="position"
@@ -44,9 +44,10 @@ const AddJobForm = ({ handleSubmit }) => {
           onChange={handleSelectChange}
           value={jobFormData?.jobType}
         />
-        <div className="form-input-container">
+        <div className="form-input-container input-textarea">
           <label htmlFor="job-desc">Job Description</label>
           <textarea
+            className="job-desc"
             onChange={handleInputChange}
             id="job-desc"
             name="jobDescription"

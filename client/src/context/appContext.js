@@ -5,8 +5,8 @@ import axios from "axios";
 import {
     CLEAR_ALERT,
     DISPLAY_ALERT,
-    AUTH_BEGIN,
-    AUTH_ERROR,
+    API_REQUEST_BEGIN,
+    API_REQUEST_ERROR,
     ADMIN_REGISTER_SUCCESS,
     ADMIN_LOGIN_SUCCESS,
     CLIENT_LOGIN_SUCCESS,
@@ -15,7 +15,10 @@ import {
     CANDIDATE_REGISTER_SUCCESS,
     SET_AUTH_FORM_DATA,
     LOGOUT_USER,
-    SET_JOB_FORM_DATA
+    SET_JOB_FORM_DATA,
+    ADD_JOB_SUCCESS,
+    GET_CLIENT_JOBS_SUCCESS,
+    GET_JOBS_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -32,8 +35,6 @@ const initialJobFormData = {
     position: "",
     jobDescription: "",
     skills: "",
-    company: user?.company || null,
-    createdBy: user?._id || null,
     jobType: "remote"
 };
 
@@ -53,6 +54,28 @@ const appContext = createContext();
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    // setting authorization headers automatically
+    const authFetch = axios.create({
+        baseURL: "/api/v1"
+    });
+
+    authFetch.interceptors.request.use((config) => {
+        config.headers["Authorization"] = `Bearer ${state.token}`;
+        return config;
+    }, (error) => {
+        return Promise.reject(error);
+    });
+
+    authFetch.interceptors.response.use((response) => {
+        return response;
+    }, (error) => {
+        if (error.response.status === 401) {
+            // logoutUser();
+            console.log(error);
+        }
+        return Promise.reject(error);
+    });
 
     // to display a alert
     const displayAlert = () => {
@@ -87,7 +110,7 @@ const AppProvider = ({ children }) => {
 
     // to register a candidate
     const registerCandidate = async (newCandidate) => {
-        dispatch({ type: AUTH_BEGIN });
+        dispatch({ type: API_REQUEST_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/register`, newCandidate);
             const { user, token } = data;
@@ -96,7 +119,7 @@ const AppProvider = ({ children }) => {
             dispatch({ type: CANDIDATE_REGISTER_SUCCESS, payload: { user, token } });
         } catch (error) {
             dispatch({
-                type: AUTH_ERROR,
+                type: API_REQUEST_ERROR,
                 payload: { message: error.response.data.message }
             });
         }
@@ -105,35 +128,35 @@ const AppProvider = ({ children }) => {
 
     // to login a candidate
     const loginCandidate = async (candidate) => {
-        dispatch({ type: AUTH_BEGIN });
+        dispatch({ type: API_REQUEST_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/login`, candidate);
             const { user, token } = data;
             addUserToLocalStorage({ user, token });
             dispatch({ type: CANDIDATE_LOGIN_SUCCESS, payload: { user, token } });
         } catch (error) {
-            dispatch({ type: AUTH_ERROR, payload: { message: error.response.data.message } });
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
         }
         clearAlert();
     }
 
     // to login a client
     const loginClient = async (client) => {
-        dispatch({ type: AUTH_BEGIN });
+        dispatch({ type: API_REQUEST_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/client/login`, client);
             const { user, token } = data;
             addUserToLocalStorage({ user, token });
             dispatch({ type: CLIENT_LOGIN_SUCCESS, payload: { user, token } });
         } catch (error) {
-            dispatch({ type: AUTH_ERROR, payload: { message: error.response.data.message } });
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
         }
         clearAlert();
     }
 
     // to register a client
     const registerClient = async (newClient) => {
-        dispatch({ type: AUTH_BEGIN });
+        dispatch({ type: API_REQUEST_BEGIN });
         try {
             const { data } = await axios.post(`/api/v1/auth/client/register`, newClient);
             const { user, token } = data;
@@ -142,7 +165,7 @@ const AppProvider = ({ children }) => {
             dispatch({ type: CLIENT_REGISTER_SUCCESS, payload: { user, token } });
         } catch (error) {
             dispatch({
-                type: AUTH_ERROR,
+                type: API_REQUEST_ERROR,
                 payload: { message: error.response.data.message }
             });
         }
@@ -156,9 +179,31 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    const clearJobForm = () => {
+        setJobFormData(initialJobFormData);
+    }
+
+    const getJobs = async () => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.post(`/jobs/client/${state.user?._id}`);
+            dispatch({ type: GET_CLIENT_JOBS_SUCCESS, payload: { clientJobs: data } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR });
+        }
+    }
+
     // to add job by client
-    const addJob = (newJob) => {
-        console.log("add job");
+    const addJob = async (newJob) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.post("/jobs", newJob);
+            // getJobs();
+            dispatch({ type: ADD_JOB_SUCCESS });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
     }
 
     return <appContext.Provider value={{
@@ -171,7 +216,8 @@ const AppProvider = ({ children }) => {
         loginClient,
         registerClient,
         setJobFormData,
-        addJob
+        addJob,
+        clearJobForm
     }}>
         {children}
     </appContext.Provider>

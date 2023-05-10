@@ -3,8 +3,8 @@ import { initialState, initialAuthFormData, initialJobFormData } from "./appCont
 import {
     CLEAR_ALERT,
     DISPLAY_ALERT,
-    AUTH_BEGIN,
-    AUTH_ERROR,
+    API_REQUEST_BEGIN,
+    API_REQUEST_ERROR,
     ADMIN_REGISTER_SUCCESS,
     ADMIN_LOGIN_SUCCESS,
     CLIENT_LOGIN_SUCCESS,
@@ -13,7 +13,10 @@ import {
     CANDIDATE_REGISTER_SUCCESS,
     LOGOUT_USER,
     SET_AUTH_FORM_DATA,
-    SET_JOB_FORM_DATA
+    SET_JOB_FORM_DATA,
+    ADD_JOB_SUCCESS,
+    GET_JOBS_SUCCESS,
+    GET_CLIENT_JOBS_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -49,14 +52,14 @@ const reducer = (state, action) => {
         }
     }
 
-    if (action.type === AUTH_BEGIN) {
+    if (action.type === API_REQUEST_BEGIN) {
         return {
             ...state,
             isLoading: true,
         }
     }
 
-    if (action.type === AUTH_ERROR) {
+    if (action.type === API_REQUEST_ERROR) {
         return {
             ...state,
             isLoading: false,
@@ -129,6 +132,15 @@ const reducer = (state, action) => {
             alertText: "You have been logged out...",
             user: null,
             token: null
+        }
+    }
+
+    if (action.type === ADD_JOB_SUCCESS) {
+        return {
+            ...state,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Job has been created.",
         }
     }
 }

@@ -13,9 +13,9 @@ const AuthForm = ({ handleSubmit, signUp }) => {
     setAuthFormData({ ...authFormData, [e.target.name]: e.target.value });
   };
   return (
-    <div className="login-form-wrapper">
+    <div className="form-wrapper">
       <Alert />
-      <form className="auth-form-container" onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         {signUp && (
           <div className="name-container">
             <FormInput
