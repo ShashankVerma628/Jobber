@@ -14,6 +14,7 @@ import {
     CANDIDATE_LOGIN_SUCCESS,
     CANDIDATE_REGISTER_SUCCESS,
     SET_AUTH_FORM_DATA,
+    SET_AUTH_CLIENT_FORM_DATA,
     LOGOUT_USER,
     SET_JOB_FORM_DATA,
     ADD_JOB_SUCCESS,
@@ -26,6 +27,13 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 const token = localStorage.getItem("token") || null;
 
 const initialAuthFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+};
+
+const initialAuthClientFormData = {
     firstName: "",
     lastName: "",
     email: "",
@@ -50,6 +58,7 @@ const initialState = {
     token,
     authFormData: initialAuthFormData,
     jobFormData: initialJobFormData,
+    authClientFormData: initialAuthClientFormData,
     isEditJob: false,
     allJobs: [],
     allJobsCount: 0,
@@ -109,6 +118,10 @@ const AppProvider = ({ children }) => {
 
     const setAuthFormData = (values) => {
         dispatch({ type: SET_AUTH_FORM_DATA, payload: { values } });
+    }
+
+    const setAuthClientFormData = (values) => {
+        dispatch({ type: SET_AUTH_CLIENT_FORM_DATA, payload: { values } });
     }
 
     const setJobFormData = (values) => {
@@ -244,7 +257,8 @@ const AppProvider = ({ children }) => {
         clearJobForm,
         getAllJobs,
         getJobs,
-        logoutUser
+        logoutUser,
+        setAuthClientFormData
     }}>
         {children}
     </appContext.Provider>
@@ -254,4 +268,4 @@ const useAppContext = () => {
     return useContext(appContext);
 }
 
-export { initialState, AppProvider, useAppContext, initialAuthFormData, initialJobFormData }; 
+export { initialState, AppProvider, useAppContext, initialAuthFormData, initialAuthClientFormData, initialJobFormData }; 

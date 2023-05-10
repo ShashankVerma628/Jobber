@@ -1,0 +1,12 @@
+.client-page-container {
+    background-color: $grayColorLight;
+    .jobs-list-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+
+        @media (max-width: $md) {
+            grid-template-columns: 1fr;
+        }
+    }
+}

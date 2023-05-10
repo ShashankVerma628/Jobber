@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { AuthForm } from "../components";
+import { AuthClientForm } from "../components";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 
@@ -8,16 +8,22 @@ const ClientLoginPage = () => {
 
   const navigate = useNavigate();
 
-  const { authFormData, user, displayAlert, registerClient, loginClient } =
-    useAppContext();
+  const {
+    authClientFormData,
+    user,
+    displayAlert,
+    registerClient,
+    loginClient,
+  } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { firstName, lastName, email, password } = authFormData;
+    const { firstName, lastName, email, password, company } =
+      authClientFormData;
 
     if (signUp) {
-      if (!firstName || !lastName || !email || !password) {
+      if (!firstName || !lastName || !email || !password || !company) {
         displayAlert();
       } else {
         const name = `${firstName} ${lastName}`;
@@ -26,6 +32,7 @@ const ClientLoginPage = () => {
           name,
           email,
           password,
+          company,
         };
 
         registerClient(newClient);
@@ -76,7 +83,7 @@ const ClientLoginPage = () => {
             </li>
           </ul>
         </div>
-        <AuthForm handleSubmit={handleSubmit} signUp={signUp} />
+        <AuthClientForm handleSubmit={handleSubmit} signUp={signUp} />
         <div className="change-auth-container">
           <p>
             {signUp

@@ -15,17 +15,21 @@ const JobHeadline = ({ job }) => {
   return (
     <div className="job-headline-container">
       <div className="job-header">
-        <div className="company-icon">{job?.company.toString().charAt(0)}</div>
         <div className="job-heading">
-          <h3 className="job-position">{job?.position}</h3>
-          <h4 className="company-name">{job?.company}</h4>
+          <div className="company-icon">
+            {job?.company.toString().charAt(0)}
+          </div>
+          <div className="job-column-heading">
+            <h3 className="job-position">{job?.position}</h3>
+            <h4 className="company-name">{job?.company}</h4>
+          </div>
         </div>
         <div className="action-btn-container">
-          <button type="button" title="save for later" onClick={() => {}}>
+          <button className="action-btn" type="button" title="save for later" onClick={() => {}}>
             <FaSave />
             {/* save the job if it a candidate is logged in */}
           </button>
-          <Link to={`/jobs/${job?._id}`} title="See more">
+          <Link to={`/jobs/${job?._id}`} className="action-btn" title="See more">
             <FaExternalLinkAlt />
           </Link>
         </div>

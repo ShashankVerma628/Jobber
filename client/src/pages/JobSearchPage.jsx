@@ -26,6 +26,7 @@ const JobSearchPage = () => {
     return (
       <div className="page-wrapper">
         <div className="job-search-page-wrapper">
+          <h2 className="total-jobs">{allJobsCount} Jobs Found</h2>
           <JobsList jobs={allJobs} />
         </div>
       </div>

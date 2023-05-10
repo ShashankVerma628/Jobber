@@ -22,11 +22,11 @@ const Header = () => {
           {user ? (
             <div className="profile-container">
               <div className="profile">
-                  <span className="profile-name">{user?.name.charAt(0)}</span>
-                  {user?.name}
+                <span className="profile-name">{user?.name.charAt(0)}</span>
+                {user?.name}
               </div>
               <button
-                onClick={() => logoutUser()}
+                onClick={logoutUser}
                 className="btn header-btn btn-primary"
               >
                 Logout

@@ -24,7 +24,6 @@ const AddJob = () => {
         jobLocation,
       };
       addJob(newJob);
-      clearJobForm();
     }
   };
 

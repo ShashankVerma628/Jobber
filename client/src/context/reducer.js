@@ -1,4 +1,4 @@
-import { initialState, initialAuthFormData, initialJobFormData } from "./appContext";
+import { initialState, initialAuthFormData, initialAuthClientFormData, initialJobFormData } from "./appContext";
 
 import {
     CLEAR_ALERT,
@@ -17,7 +17,8 @@ import {
     ADD_JOB_SUCCESS,
     GET_JOBS_SUCCESS,
     GET_CLIENT_JOBS_SUCCESS,
-    GET_ALL_JOBS_SUCCESS
+    GET_ALL_JOBS_SUCCESS,
+    SET_AUTH_CLIENT_FORM_DATA
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -43,6 +44,13 @@ const reducer = (state, action) => {
         return {
             ...state,
             authFormData: action.payload.values
+        }
+    }
+
+    if (action.type === SET_AUTH_CLIENT_FORM_DATA) {
+        return {
+            ...state,
+            authClientFormData: action.payload.values
         }
     }
 
@@ -108,7 +116,7 @@ const reducer = (state, action) => {
             alertText: "Client Registration Successful, Redirecting...",
             user: action.payload.user,
             token: action.payload.token,
-            authFormData: initialAuthFormData
+            authFormData: initialAuthClientFormData
         }
     }
 
@@ -121,7 +129,7 @@ const reducer = (state, action) => {
             alertText: "Login Successful, Redirecting...",
             user: action.payload.user,
             token: action.payload.token,
-            authFormData: initialAuthFormData
+            authFormData: initialAuthClientFormData
         }
     }
 
@@ -144,6 +152,7 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: "success",
             alertText: "Job has been created.",
+            jobFormData: initialJobFormData
         }
     }
 
