@@ -194,9 +194,11 @@ const AppProvider = ({ children }) => {
 
     // logout a user
     const logoutUser = () => {
-        removeUserFromLocalStorage();
-        dispatch({ type: LOGOUT_USER });
-        clearAlert();
+        if (state.token !== null) {
+            removeUserFromLocalStorage();
+            dispatch({ type: LOGOUT_USER });
+            clearAlert();
+        }
     }
 
     const clearJobForm = () => {

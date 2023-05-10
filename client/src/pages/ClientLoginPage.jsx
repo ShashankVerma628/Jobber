@@ -38,7 +38,6 @@ const ClientLoginPage = () => {
         registerClient(newClient);
       }
     } else {
-      console.log(email, password);
       if (!email || !password) {
         displayAlert();
       } else {
