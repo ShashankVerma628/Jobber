@@ -9,12 +9,13 @@ import AuthForm from "./Form/AuthForm";
 import AddJob from "./Client/AddJob";
 import Profile from "./Client/Profile";
 import AllJobs from "./Client/AllJobs";
-import JobDetails from "./Client/JobDetails";
+import JobDetails from "./JobDetails";
 import ClientStats from "./Client/ClientStats";
 import SmallSidebar from "./Layout/SmallSidebar";
 import BigSidebar from "./Layout/BigSidebar";
 import EditJob from "./Client/EditJob";
 import JobsList from "./JobsList";
 import AuthClientForm from "./Form/AuthClientForm";
+import ClientDetails from "./ClientDetails";
 
-export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm };
+export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm, ClientDetails };

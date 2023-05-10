@@ -18,7 +18,8 @@ import {
     GET_JOBS_SUCCESS,
     GET_CLIENT_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
-    SET_AUTH_CLIENT_FORM_DATA
+    SET_AUTH_CLIENT_FORM_DATA,
+    GET_SINGLE_JOB_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -172,6 +173,14 @@ const reducer = (state, action) => {
             showAlert: false,
             allJobs: action.payload.jobs,
             allJobsCount: action.payload.count
+        }
+    }
+
+    if (action.type === GET_SINGLE_JOB_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            singleJob: action.payload.job
         }
     }
 }

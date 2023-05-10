@@ -1,0 +1,31 @@
+.job-details-page-wrapper {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 1em;
+
+    .job-details-wrapper,
+    .client-details-wrapper {
+        background-color: $whiteColor;
+        border: 1px solid $whiteColor;
+        border-radius: 10px;
+        padding: 1.5em;
+    }
+
+    .job-details-wrapper {
+        .job-description {
+            margin: 1rem 0;
+
+            .job-desc-heading {
+                margin: 1rem 0;
+            }
+        }
+    }
+
+    @media (max-width: $md) {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    @media (max-width: $sm) {
+        grid-template-columns: 1fr;
+    }
+}

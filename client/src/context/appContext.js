@@ -21,6 +21,7 @@ import {
     GET_CLIENT_JOBS_SUCCESS,
     GET_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
+    GET_SINGLE_JOB_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -63,7 +64,9 @@ const initialState = {
     allJobs: [],
     allJobsCount: 0,
     clientJobs: [],
-    clientJobsCount: 0
+    clientJobsCount: 0,
+    singleJob: null,
+    clientDetails: null
 };
 
 const appContext = createContext();
@@ -245,6 +248,24 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    // get single Job
+    const getSingleJob = async (jobId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await axios.get(`/api/v1/jobs/${jobId}`);
+            const { job } = data;
+            dispatch({ type: GET_SINGLE_JOB_SUCCESS, payload: { job } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+    }
+
+    // to get some of client details
+    const getClientDetails = async () => {
+        // dispatch({ type })
+        console.log("client details");
+    }
+
     return <appContext.Provider value={{
         ...state,
         setAuthFormData,
@@ -260,7 +281,9 @@ const AppProvider = ({ children }) => {
         getAllJobs,
         getJobs,
         logoutUser,
-        setAuthClientFormData
+        setAuthClientFormData,
+        getSingleJob,
+        getClientDetails
     }}>
         {children}
     </appContext.Provider>
