@@ -21,7 +21,8 @@ import {
     GET_CLIENT_JOBS_SUCCESS,
     GET_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
-    GET_SINGLE_JOB_SUCCESS
+    GET_SINGLE_JOB_SUCCESS,
+    GET_CLIENT_DETAILS_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -261,9 +262,16 @@ const AppProvider = ({ children }) => {
     }
 
     // to get some of client details
-    const getClientDetails = async () => {
-        // dispatch({ type })
-        console.log("client details");
+    const getClientDetails = async (clientId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await axios.get(`/api/v1/clients/details/${clientId}`);
+            const { user } = data;
+            dispatch({ type: GET_CLIENT_DETAILS_SUCCESS, payload: { user } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR });
+        }
+        clearAlert();
     }
 
     return <appContext.Provider value={{

@@ -11,7 +11,7 @@ import {
 const SocialMedia = () => {
   return (
     <>
-      <h1>Follow Us On Social Media</h1>
+      <h3>Follow Us On Social Media</h3>
       <ul className="container">
         <a href="https://facebook.com" target="_blank" className="tab facebook">
           <div className="svg dark">

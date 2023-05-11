@@ -4,13 +4,18 @@ import {
   FaMapMarkerAlt,
   FaRupeeSign,
   FaSuitcase,
+  FaEdit,
+  FaTrash,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useAppContext } from "../context/appContext";
 
 const JobHeadline = ({ job }) => {
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
+
+  const { user } = useAppContext();
 
   return (
     <div className="job-headline-container">
@@ -25,11 +30,36 @@ const JobHeadline = ({ job }) => {
           </div>
         </div>
         <div className="action-btn-container">
-          <button className="action-btn" type="button" title="save for later" onClick={() => {}}>
-            <FaSave />
-            {/* save the job if it a candidate is logged in */}
-          </button>
-          <Link to={`/jobs/${job?._id}`} className="action-btn" title="See more">
+          {user?.userRole === "client" ? (
+            <button title="edit job" className="action-btn" onClick={() => {}}>
+              <FaEdit />
+              {/* Edit the job if a client is logged in */}
+            </button>
+          ) : (
+            <button
+              className="action-btn"
+              type="button"
+              title="save for later"
+              onClick={() => {}}
+            >
+              <FaSave />
+              {/* save the job if it a candidate is logged in */}
+            </button>
+          )}
+          {user?.userRole === "client" ? (
+            <button
+              title="delete job"
+              onClick={() => {}}
+              className="action-btn"
+            >
+              <FaTrash />
+            </button>
+          ) : null}
+          <Link
+            to={`/jobs/${job?._id}`}
+            className="action-btn"
+            title="See more"
+          >
             <FaExternalLinkAlt />
           </Link>
         </div>

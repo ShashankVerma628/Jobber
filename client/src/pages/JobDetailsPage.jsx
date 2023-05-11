@@ -30,7 +30,7 @@ const JobDetailsPage = () => {
       <div className="page-wrapper">
         <div className="job-details-page-wrapper">
           <JobDetails job={singleJob} />
-          <ClientDetails clientId={singleJob?.createdBy} />
+          <ClientDetails />
         </div>
       </div>
     );

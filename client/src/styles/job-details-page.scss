@@ -21,6 +21,36 @@
         }
     }
 
+    .client-details-wrapper {
+        .client-details-container {
+            margin: 1rem 0;
+            .profile-container {
+                display: flex;
+                gap: 0.4em;
+
+                .icon {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background-color: $secondaryColorDark;
+                    color: $whiteColor;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.1rem;
+                }
+                .details {
+                    .client-name {
+                        font-size: 1.2rem;
+                    }
+                    .client-company {
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+
     @media (max-width: $md) {
         grid-template-columns: 2fr 1fr;
     }

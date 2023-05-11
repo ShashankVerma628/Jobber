@@ -96,4 +96,8 @@ ul {
 .page-wrapper {
     padding: 2rem 1rem;
     background-color: $grayColorLight;
+
+    @media (max-width: $sm) {
+        padding: 2rem 0.2rem;
+    }
 }

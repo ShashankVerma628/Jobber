@@ -19,7 +19,8 @@ import {
     GET_CLIENT_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
     SET_AUTH_CLIENT_FORM_DATA,
-    GET_SINGLE_JOB_SUCCESS
+    GET_SINGLE_JOB_SUCCESS,
+    GET_CLIENT_DETAILS_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -117,7 +118,7 @@ const reducer = (state, action) => {
             alertText: "Client Registration Successful, Redirecting...",
             user: action.payload.user,
             token: action.payload.token,
-            authFormData: initialAuthClientFormData
+            authClientFormData: initialAuthClientFormData
         }
     }
 
@@ -130,7 +131,7 @@ const reducer = (state, action) => {
             alertText: "Login Successful, Redirecting...",
             user: action.payload.user,
             token: action.payload.token,
-            authFormData: initialAuthClientFormData
+            authClientFormData: initialAuthClientFormData
         }
     }
 
@@ -181,6 +182,14 @@ const reducer = (state, action) => {
             ...state,
             isLoading: false,
             singleJob: action.payload.job
+        }
+    }
+
+    if (action.type === GET_CLIENT_DETAILS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            clientDetails: action.payload.user
         }
     }
 }

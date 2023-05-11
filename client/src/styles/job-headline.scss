@@ -35,7 +35,6 @@
         }
         .action-btn-container {
             display: flex;
-            gap: 0.2rem;
             align-items: center;
 
             .action-btn {
@@ -43,7 +42,13 @@
                 border: none;
                 cursor: pointer;
                 border-radius: 50%;
-                padding: 0.5em;
+                color: $primaryColorDark;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.1rem;
 
                 &:hover {
                     color: $whiteColor;
@@ -78,7 +83,7 @@
         }
     }
 
-    .job-created-at{
+    .job-created-at {
         text-align: right;
     }
 }
