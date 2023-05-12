@@ -22,7 +22,9 @@ import {
     GET_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
     GET_SINGLE_JOB_SUCCESS,
-    GET_CLIENT_DETAILS_SUCCESS
+    GET_CLIENT_DETAILS_SUCCESS,
+    DELETE_JOB_SUCCESS,
+    EDIT_JOB_SUCCESS,
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -61,7 +63,6 @@ const initialState = {
     authFormData: initialAuthFormData,
     jobFormData: initialJobFormData,
     authClientFormData: initialAuthClientFormData,
-    isEditJob: false,
     allJobs: [],
     allJobsCount: 0,
     clientJobs: [],
@@ -131,6 +132,7 @@ const AppProvider = ({ children }) => {
     const setJobFormData = (values) => {
         dispatch({ type: SET_JOB_FORM_DATA, payload: { values } })
     }
+
 
     // to register a candidate
     const registerCandidate = async (newCandidate) => {
@@ -239,10 +241,35 @@ const AppProvider = ({ children }) => {
     const addJob = async (newJob) => {
         dispatch({ type: API_REQUEST_BEGIN });
         try {
-            const { data } = await authFetch.post("/jobs", newJob);
+            await authFetch.post("/jobs", newJob);
             getJobs();
             getAllJobs();
             dispatch({ type: ADD_JOB_SUCCESS });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    const editJob = async (jobId, job) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            await authFetch.patch(`/jobs/${jobId}`, job);
+            dispatch({ type: EDIT_JOB_SUCCESS });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    // to delete a job
+    const deleteJob = async (jobId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            await authFetch.delete(`/jobs/${jobId}`);
+            getJobs();
+            getAllJobs();
+            dispatch({ type: DELETE_JOB_SUCCESS });
         } catch (error) {
             dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
         }
@@ -261,7 +288,7 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    // to get some of client details
+    // to get client details
     const getClientDetails = async (clientId) => {
         dispatch({ type: API_REQUEST_BEGIN });
         try {
@@ -291,7 +318,9 @@ const AppProvider = ({ children }) => {
         logoutUser,
         setAuthClientFormData,
         getSingleJob,
-        getClientDetails
+        getClientDetails,
+        deleteJob,
+        editJob
     }}>
         {children}
     </appContext.Provider>

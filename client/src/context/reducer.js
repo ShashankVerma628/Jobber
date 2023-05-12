@@ -20,7 +20,9 @@ import {
     GET_ALL_JOBS_SUCCESS,
     SET_AUTH_CLIENT_FORM_DATA,
     GET_SINGLE_JOB_SUCCESS,
-    GET_CLIENT_DETAILS_SUCCESS
+    GET_CLIENT_DETAILS_SUCCESS,
+    DELETE_JOB_SUCCESS,
+    EDIT_JOB_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -59,7 +61,7 @@ const reducer = (state, action) => {
     if (action.type === SET_JOB_FORM_DATA) {
         return {
             ...state,
-            jobFormData: action.payload.values
+            jobFormData: action.payload.values,
         }
     }
 
@@ -155,6 +157,28 @@ const reducer = (state, action) => {
             alertType: "success",
             alertText: "Job has been created.",
             jobFormData: initialJobFormData
+        }
+    }
+
+    if (action.type === EDIT_JOB_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            isEditJob: false,
+            alertText: "Job has been edited",
+            jobFormData: initialJobFormData
+        }
+    }
+
+    if (action.type === DELETE_JOB_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Job has been deleted"
         }
     }
 

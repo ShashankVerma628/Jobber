@@ -12,7 +12,6 @@ const AddJob = () => {
     salary = `${salary} Lakh/Year INR`;
 
     if (!position || !jobDescription || skills.length === 0 || !jobType) {
-      console.log("bro");
       displayAlert();
     } else {
       const newJob = {

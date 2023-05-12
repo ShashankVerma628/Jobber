@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FormInput from "./FormInput";
 import FormButton from "./FormButton";
 import Alert from "../Alert";
@@ -7,15 +6,8 @@ import { options } from "../../assets/options";
 
 import { useAppContext } from "../../context/appContext";
 
-const AddJobForm = ({ handleSubmit }) => {
-  const [jobType, setJobType] = useState("remote");
-
-  const { jobFormData, setJobFormData, isEditJob, user } = useAppContext();
-
-  const handleSelectChange = (e) => {
-    setJobType(e.target.value);
-    setJobFormData({ ...jobFormData, jobType });
-  };
+const AddJobForm = ({ handleSubmit, isEditJob }) => {
+  const { jobFormData, setJobFormData, user } = useAppContext();
 
   const handleInputChange = (e) => {
     setJobFormData({ ...jobFormData, [e.target.name]: e.target.value });
@@ -61,7 +53,8 @@ const AddJobForm = ({ handleSubmit }) => {
         <FormSelect
           label="Job Type"
           options={options}
-          onChange={handleSelectChange}
+          name="jobType"
+          onChange={handleInputChange}
           value={jobFormData?.jobType}
         />
         <div className="form-input-container input-textarea">
