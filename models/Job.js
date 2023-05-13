@@ -40,6 +40,10 @@ const JobSchema = new mongoose.Schema({
     jobLocation: {
         type: String,
         required: [true, "Please provide job location"]
+    },
+    applicants: {
+        type: [String],
+        default: []
     }
 }, { timestamps: true });
 

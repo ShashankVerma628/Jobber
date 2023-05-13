@@ -22,7 +22,8 @@ import {
     GET_SINGLE_JOB_SUCCESS,
     GET_CLIENT_DETAILS_SUCCESS,
     DELETE_JOB_SUCCESS,
-    EDIT_JOB_SUCCESS
+    EDIT_JOB_SUCCESS,
+    JOB_APPLY_SUCCESSFUL
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -214,6 +215,16 @@ const reducer = (state, action) => {
             ...state,
             isLoading: false,
             clientDetails: action.payload.user
+        }
+    }
+
+    if (action.type === JOB_APPLY_SUCCESSFUL) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "You have successfully applied for this job!"
         }
     }
 }

@@ -5,16 +5,36 @@ import {
   FaSuitcase,
 } from "react-icons/fa";
 import moment from "moment";
+import { useAppContext } from "../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 const JobDetails = ({ job }) => {
+  const { user, token, logoutUser, applyForJob } = useAppContext();
+  const isApplied = job?.applicants.findIndex((id) => id === user?._id);
+
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
+
+  const navigate = useNavigate();
 
   const jobDescription = job?.jobDescription
     .split("\\n")
     .map(function (line, n) {
       return n == 0 ? [line] : [<br />, line];
     });
+
+  const handleApply = () => {
+    console.log("hello");
+    if (!user || !token || user?.userRole !== "candidate") {
+      logoutUser();
+      navigate("/login");
+    } else {
+      applyForJob(job?._id);
+      // setTimeout(() => {
+      //   navigate("/");
+      // }, 4000);
+    }
+  };
 
   return (
     <div className="job-details-wrapper">
@@ -68,6 +88,18 @@ const JobDetails = ({ job }) => {
             <div className="job-desc-content">
               <div className="job-desc">{jobDescription}</div>
             </div>
+          </div>
+          <div className="action-btn">
+            <button
+              className={
+                isApplied === -1 ? "apply-btn btn" : "apply-btn btn disabled"
+              }
+              type="button"
+              disabled={isApplied === -1 ? false : true}
+              onClick={handleApply}
+            >
+              {isApplied === -1 ? "Apply" : "Applied"}
+            </button>
           </div>
           <div className="job-created-at">{date}</div>
         </div>

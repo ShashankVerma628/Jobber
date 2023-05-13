@@ -25,6 +25,7 @@ import {
     GET_CLIENT_DETAILS_SUCCESS,
     DELETE_JOB_SUCCESS,
     EDIT_JOB_SUCCESS,
+    JOB_APPLY_SUCCESSFUL
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -301,6 +302,18 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    // to apply for a job
+    const applyForJob = async (jobId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            await authFetch.patch(`/jobs/candidate/${jobId}`);
+            dispatch({ type: JOB_APPLY_SUCCESSFUL });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR });
+        }
+        clearAlert();
+    }
+
     return <appContext.Provider value={{
         ...state,
         setAuthFormData,
@@ -320,7 +333,8 @@ const AppProvider = ({ children }) => {
         getSingleJob,
         getClientDetails,
         deleteJob,
-        editJob
+        editJob,
+        applyForJob
     }}>
         {children}
     </appContext.Provider>

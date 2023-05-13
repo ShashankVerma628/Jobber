@@ -87,4 +87,33 @@ const deleteJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ message: "Job has been deleted!! Redirecting...." });
 }
 
-export { getAllJobs, getSingleJob, createJob, editJob, deleteJob, getJobs };
+const getCandidateJobs = async (req, res) => {
+
+    console.log("get Candidate Jobs");
+}
+
+const applyForJob = async (req, res) => {
+    if (req.user.userRole !== "candidate") {
+        throw new BadRequestError("You are not candidate");
+    }
+    const { jobId } = req.params;
+
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+        throw new NotFoundError(`There is no job with this id ${jobId}`);
+    }
+
+    const index = job.applicants.findIndex((id) => id === String(req.user.userId));
+
+    if (index !== -1) {
+        throw new BadRequestError("You have already applied for this job");
+    }
+    job.applicants.push(String(req.user.userId));
+    await job.save();
+
+    res.status(StatusCodes.OK).json({ job });
+}
+
+export { getAllJobs, getSingleJob, createJob, editJob, applyForJob, deleteJob, getJobs, getCandidateJobs };
+

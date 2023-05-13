@@ -2,6 +2,7 @@ import { IoBarChartSharp } from 'react-icons/io5';
 import { MdQueryStats } from 'react-icons/md';
 import { FaWpforms } from 'react-icons/fa';
 import { ImProfile } from 'react-icons/im';
+import { FaSave } from "react-icons/fa";
 
 
 export const clientNavLinks = [
@@ -32,5 +33,22 @@ export const clientNavLinks = [
 ]
 
 export const candidateNavLinks = [
-
+    {
+        id: 1,
+        text: 'all jobs',
+        path: '/dashboard',
+        icon: <MdQueryStats />,
+    },
+    {
+        id: 2,
+        text: 'saved jobs',
+        path: '/dashboard/saved-jobs',
+        icon: <FaSave />,
+    },
+    {
+        id: 3,
+        text: 'profile',
+        path: 'profile',
+        icon: <ImProfile />,
+    }
 ]

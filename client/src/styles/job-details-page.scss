@@ -21,6 +21,27 @@
         }
     }
 
+    .apply-btn {
+        background-color: $secondaryColorDark;
+        color: $whiteColor;
+        font-size: 1.2rem;
+
+        &:hover {
+            border: 5px solid $secondaryColorLight;
+        }
+
+        &:hover.disabled {
+            border: none;
+        }
+
+        &.disabled {
+            border: none;
+            background-color: $whiteColor;
+            color: $secondaryColorDark;
+            cursor: not-allowed;
+        }
+    }
+
     .client-details-wrapper {
         .client-details-container {
             margin: 1rem 0;
