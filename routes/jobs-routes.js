@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllJobs, getSingleJob, applyForJob, createJob, editJob, deleteJob, getJobs, getCandidateJobs } from "../controllers/jobs-controllers.js";
+import { getAllJobs, getSingleJob, applyForJob, createJob, editJob, deleteJob, getJobs, getCandidateJobs, saveJob, getSavedJobs } from "../controllers/jobs-controllers.js";
 
 import authenticateUser from "../middleware/auth.js";
 
@@ -18,7 +18,13 @@ router.get("/client/:clientId", authenticateUser, getJobs);
 router.patch("/candidate/:jobId", authenticateUser, applyForJob);
 
 // get all jobs that a candidate has applied for
-router.get("/candidate:/candidateId", authenticateUser, getCandidateJobs);
+router.get("/candidate/:candidateId", authenticateUser, getCandidateJobs);
+
+// to save a job for candidate
+router.patch("/saved-job/:jobId", authenticateUser, saveJob);
+
+// to get all the saved jobs of a candidate
+router.get("/saved-job/:candidateId", authenticateUser, getSavedJobs);
 
 // to create a job
 router.post("/", authenticateUser, createJob);

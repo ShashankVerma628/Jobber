@@ -1,5 +1,6 @@
 import StatusCodes from "http-status-codes";
 import Job from "../models/Job.js";
+import Candidate from "../models/Candidate.js";
 
 import { BadRequestError, NotFoundError, UnauthenticatedError } from "../errors/index.js";
 import { checkClientPermissions } from "../utils/checkPermission.js";
@@ -88,8 +89,22 @@ const deleteJob = async (req, res) => {
 }
 
 const getCandidateJobs = async (req, res) => {
+    if (req.user.userRole !== "candidate") {
+        throw new UnauthenticatedError("You are not authorized for this actions");
+    }
 
-    console.log("get Candidate Jobs");
+    const { candidateId } = req.params;
+
+    const allJobs = await Job.find();
+
+    let jobs = [];
+    allJobs.map((job) => {
+        if (job.applicants.includes(candidateId.toString())) {
+            jobs.push(job);
+        }
+    });
+
+    res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 }
 
 const applyForJob = async (req, res) => {
@@ -115,5 +130,47 @@ const applyForJob = async (req, res) => {
     res.status(StatusCodes.OK).json({ job });
 }
 
-export { getAllJobs, getSingleJob, createJob, editJob, applyForJob, deleteJob, getJobs, getCandidateJobs };
+const saveJob = async (req, res) => {
+    if (req.user.userRole !== "candidate") {
+        throw new BadRequestError("You are not candidate");
+    }
+    const { jobId } = req.params;
 
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+        throw new NotFoundError(`There is no job with this id ${jobId}`);
+    }
+
+    const index = job.likes.findIndex((id) => id === String(req.user.userId));
+
+    if (index === -1 || job.likes.length === 0) {
+        job.likes.push(req.user.userId);
+    } else {
+        job.likes = job.likes.filter((id) => id !== String(req.user.userId));
+    }
+    await job.save();
+
+    res.status(StatusCodes.OK).json({ job });
+}
+
+const getSavedJobs = async (req, res) => {
+    if (req.user.userRole !== "candidate") {
+        throw new UnauthenticatedError("You are not authorized for this actions");
+    }
+
+    const { candidateId } = req.params;
+
+    const allJobs = await Job.find();
+
+    let jobs = [];
+    allJobs.map((job) => {
+        if (job.likes.includes(candidateId.toString())) {
+            jobs.push(job);
+        }
+    });
+
+    res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
+}
+
+export { getAllJobs, getSingleJob, createJob, editJob, applyForJob, deleteJob, getJobs, getCandidateJobs, saveJob, getSavedJobs };

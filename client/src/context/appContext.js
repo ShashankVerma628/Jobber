@@ -25,7 +25,10 @@ import {
     GET_CLIENT_DETAILS_SUCCESS,
     DELETE_JOB_SUCCESS,
     EDIT_JOB_SUCCESS,
-    JOB_APPLY_SUCCESSFUL
+    JOB_APPLY_SUCCESSFUL,
+    GET_CANDIDATE_JOBS_SUCCESS,
+    SAVE_JOB_SUCCESS,
+    GET_SAVED_JOBS_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -69,7 +72,11 @@ const initialState = {
     clientJobs: [],
     clientJobsCount: 0,
     singleJob: null,
-    clientDetails: null
+    clientDetails: null,
+    candidateJobs: [],
+    candidateJobsCount: 0,
+    savedJobs: [],
+    savedJobsCount: 0
 };
 
 const appContext = createContext();
@@ -314,6 +321,46 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    // get jobs candidate applied for
+    const getCandidateJobs = async (candidateId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.get(`/jobs/candidate/${candidateId}`);
+            const { jobs, count } = data;
+            dispatch({ type: GET_CANDIDATE_JOBS_SUCCESS, payload: { jobs, count } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    // to save a job for a candidate
+    const saveJob = async (jobId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.patch(`/jobs/saved-job/${jobId}`);
+            console.log(data);
+            dispatch({ type: SAVE_JOB_SUCCESS });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
+    // to get all saved jobs of a candidate
+    const getSavedJobs = async (candidateId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.get(`/jobs/saved-job/${candidateId}`);
+            const { jobs, count } = data;
+            dispatch({ type: GET_SAVED_JOBS_SUCCESS, payload: { jobs, count } });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR });
+        }
+        clearAlert();
+    }
+
+
     return <appContext.Provider value={{
         ...state,
         setAuthFormData,
@@ -334,7 +381,10 @@ const AppProvider = ({ children }) => {
         getClientDetails,
         deleteJob,
         editJob,
-        applyForJob
+        applyForJob,
+        getCandidateJobs,
+        saveJob,
+        getSavedJobs
     }}>
         {children}
     </appContext.Provider>

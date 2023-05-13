@@ -1,16 +1,20 @@
 import {
-  FaSave,
   FaMapMarkerAlt,
   FaRupeeSign,
   FaSuitcase,
+  FaHeart,
+  FaRegHeart,
 } from "react-icons/fa";
 import moment from "moment";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
 
 const JobDetails = ({ job }) => {
-  const { user, token, logoutUser, applyForJob } = useAppContext();
+  const { user, token, logoutUser, applyForJob, saveJob } = useAppContext();
   const isApplied = job?.applicants.findIndex((id) => id === user?._id);
+  const isSaved = job?.likes.findIndex(
+    (id) => id?.toString() === user?._id.toString()
+  );
 
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
@@ -24,15 +28,26 @@ const JobDetails = ({ job }) => {
     });
 
   const handleApply = () => {
-    console.log("hello");
     if (!user || !token || user?.userRole !== "candidate") {
       logoutUser();
       navigate("/login");
     } else {
       applyForJob(job?._id);
-      // setTimeout(() => {
-      //   navigate("/");
-      // }, 4000);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  };
+
+  const handleJobSave = () => {
+    if (!user || !token || user?.userRole !== "candidate") {
+      logoutUser();
+      navigate("/login");
+    } else {
+      saveJob(job?._id);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     }
   };
 
@@ -50,15 +65,15 @@ const JobDetails = ({ job }) => {
                 <h4 className="company-name">{job?.company}</h4>
               </div>
             </div>
+
             <div className="action-btn-container">
               <button
                 className="action-btn"
                 type="button"
                 title="save for later"
-                onClick={() => {}}
+                onClick={handleJobSave}
               >
-                <FaSave />
-                {/* save the job if it a candidate is logged in */}
+                {isSaved === -1 ? <FaRegHeart /> : <FaHeart />}
               </button>
             </div>
           </div>

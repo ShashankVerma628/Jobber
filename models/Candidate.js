@@ -30,14 +30,6 @@ const CandidateSchema = new mongoose.Schema({
     userRole: {
         type: String,
         default: "candidate"
-    },
-    savedJobs: {
-        type: [String],
-        default: []
-    },
-    appliedJobs: {
-        type: [String],
-        default: []
     }
 }, { timestamps: true });
 

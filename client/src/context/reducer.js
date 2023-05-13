@@ -23,7 +23,10 @@ import {
     GET_CLIENT_DETAILS_SUCCESS,
     DELETE_JOB_SUCCESS,
     EDIT_JOB_SUCCESS,
-    JOB_APPLY_SUCCESSFUL
+    JOB_APPLY_SUCCESSFUL,
+    GET_CANDIDATE_JOBS_SUCCESS,
+    SAVE_JOB_SUCCESS,
+    GET_SAVED_JOBS_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -225,6 +228,34 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: "success",
             alertText: "You have successfully applied for this job!"
+        }
+    }
+
+    if (action.type === GET_CANDIDATE_JOBS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            candidateJobs: action.payload.jobs,
+            candidateJobsCount: action.payload.count
+        }
+    }
+
+    if (action.type === SAVE_JOB_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Job has been saved",
+        }
+    }
+
+    if (action.type === GET_SAVED_JOBS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            savedJobs: action.payload.jobs,
+            savedJobsCount: action.payload.count
         }
     }
 }

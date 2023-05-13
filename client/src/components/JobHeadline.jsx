@@ -1,11 +1,12 @@
 import {
   FaExternalLinkAlt,
-  FaSave,
   FaMapMarkerAlt,
   FaRupeeSign,
   FaSuitcase,
   FaEdit,
   FaTrash,
+  FaHeart,
+  FaRegHeart,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -14,10 +15,9 @@ import { useAppContext } from "../context/appContext";
 const JobHeadline = ({ job }) => {
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
+  const { user, deleteJob, setJobFormData } = useAppContext();
 
   const navigate = useNavigate();
-
-  const { user, deleteJob, setJobFormData } = useAppContext();
 
   const handleJobEdit = () => {
     setJobFormData(job);
@@ -44,19 +44,8 @@ const JobHeadline = ({ job }) => {
               onClick={handleJobEdit}
             >
               <FaEdit />
-              {/* Edit the job if a client is logged in */}
             </button>
-          ) : (
-            <button
-              className="action-btn"
-              type="button"
-              title="save for later"
-              onClick={() => {}}
-            >
-              <FaSave />
-              {/* save the job if it a candidate is logged in */}
-            </button>
-          )}
+          ) : null}
           {user?.userRole === "client" && user?._id === job?.createdBy ? (
             <button
               title="delete job"
