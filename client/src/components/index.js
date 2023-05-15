@@ -20,5 +20,6 @@ import ClientDetails from "./ClientDetails";
 import CandidateProfile from "./Candidate/CandidateProfile";
 import SavedJobs from "./Candidate/SavedJobs";
 import AllCandidateJobs from "./Candidate/AllCandidateJobs";
+import Applicant from "./Applicant";
 
-export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm, ClientDetails, AllCandidateJobs, SavedJobs, CandidateProfile };
+export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm, ClientDetails, AllCandidateJobs, SavedJobs, CandidateProfile, Applicant };

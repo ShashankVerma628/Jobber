@@ -28,7 +28,8 @@ import {
     JOB_APPLY_SUCCESSFUL,
     GET_CANDIDATE_JOBS_SUCCESS,
     SAVE_JOB_SUCCESS,
-    GET_SAVED_JOBS_SUCCESS
+    GET_SAVED_JOBS_SUCCESS,
+    APPLICANT_DETAILS_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -360,6 +361,17 @@ const AppProvider = ({ children }) => {
         clearAlert();
     }
 
+    // to get applicant details
+    const getApplicant = async (applicantId) => {
+        try {
+            const { data } = await authFetch.get(`/clients/candidate-details/${applicantId}`);
+            const { applicant } = data;
+            return applicant;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return <appContext.Provider value={{
         ...state,
@@ -384,7 +396,8 @@ const AppProvider = ({ children }) => {
         applyForJob,
         getCandidateJobs,
         saveJob,
-        getSavedJobs
+        getSavedJobs,
+        getApplicant
     }}>
         {children}
     </appContext.Provider>

@@ -11,8 +11,8 @@ const Header = () => {
         <Logo />
       </div>
       <div className="navigation-container">
-        <div className="header-right-container">
-          <Link to="/why-jobber" className="link header-link">
+        <div className="header-middle-container">
+          <Link to="/why-jobber" className="link desktop-only header-link">
             Why Jobber ?
           </Link>
           <Link to="/" className="link header-link active">

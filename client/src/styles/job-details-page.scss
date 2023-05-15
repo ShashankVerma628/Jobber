@@ -19,64 +19,138 @@
                 margin: 1rem 0;
             }
         }
-    }
-
-    .apply-btn {
-        background-color: $secondaryColorDark;
-        color: $whiteColor;
-        font-size: 1.2rem;
-
-        &:hover {
-            border: 5px solid $secondaryColorLight;
-        }
-
-        &:hover.disabled {
-            border: none;
-        }
-
-        &.disabled {
-            border: none;
-            background-color: $whiteColor;
-            color: $secondaryColorDark;
-            cursor: not-allowed;
-        }
-    }
-
-    .client-details-wrapper {
-        .client-details-container {
-            margin: 1rem 0;
-            .profile-container {
-                display: flex;
-                gap: 0.4em;
-
-                .icon {
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    background-color: $secondaryColorDark;
-                    color: $whiteColor;
+        .applicants-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            .applicant-container {
+                .applicant-details-container {
                     display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 1.1rem;
-                }
-                .details {
-                    .client-name {
-                        font-size: 1.2rem;
+                    justify-content: space-between;
+                    .profile-link {
+                        color: $primaryColorDark;
+                        font-size: 0.9rem;
+                        border-bottom: 1px solid transparent;
+                        &:hover {
+                            border-color: $primaryColor;
+                        }
                     }
-                    .client-company {
-                        font-size: 0.8rem;
+                    .applicant-profile {
+                        display: flex;
+                        gap: 0.5em;
+
+                        &-icon {
+                            background-color: $primaryColor;
+                            width: 40px;
+                            height: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            color: $whiteColor;
+                        }
+
+                        .applicant-details {
+                            .applicant-name {
+                                font-family: "Nunito", sans-serif;
+                                font-weight: 700;
+                                font-size: 1.2rem;
+                            }
+
+                            .applicant-title {
+                                font-size: 0.9rem;
+                                color: $grayColorDark;
+                            }
+                        }
+                    }
+
+                    .action-btn-container {
+                        .action-btn {
+                            border: 5px solid $whiteColor;
+                        }
+
+                        .accept-btn {
+                            color: $whiteColor;
+                            background-color: $secondaryColorDark;
+
+                            &:hover {
+                                border-color: $secondaryColorLight;
+                            }
+                        }
+
+                        .reject-btn {
+                            color: $whiteColor;
+                            background-color: red;
+                            &:hover {
+                                border-color: rgb(255, 184, 184);
+                            }
+                        }
                     }
                 }
             }
         }
-    }
 
-    @media (max-width: $md) {
-        grid-template-columns: 2fr 1fr;
-    }
+        .apply-btn {
+            background-color: $secondaryColorDark;
+            color: $whiteColor;
+            font-size: 1.2rem;
 
-    @media (max-width: $sm) {
-        grid-template-columns: 1fr;
+            &:hover {
+                border: 5px solid $secondaryColorLight;
+            }
+
+            &:hover.disabled {
+                border: none;
+            }
+
+            &.disabled {
+                border: none;
+                background-color: $whiteColor;
+                color: $secondaryColorDark;
+                cursor: not-allowed;
+            }
+        }
+
+        .client-details-wrapper {
+            .client-details-container {
+                margin: 1rem 0;
+                .profile-container {
+                    display: flex;
+                    gap: 0.4em;
+
+                    .icon {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background-color: $secondaryColorDark;
+                        color: $whiteColor;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 1.1rem;
+                    }
+                    .details {
+                        .client-name {
+                            font-size: 1.2rem;
+                        }
+                        .client-company {
+                            font-size: 0.8rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .job-created-at {
+            position: unset;
+        }
+
+        @media (max-width: $md) {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        @media (max-width: $sm) {
+            grid-template-columns: 1fr;
+        }
     }
 }

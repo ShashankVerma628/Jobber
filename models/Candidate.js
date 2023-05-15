@@ -11,6 +11,11 @@ const CandidateSchema = new mongoose.Schema({
         required: [true, "Please provide candidate's name"],
         minLength: [3, "Name cannot be less than 3 characters"]
     },
+    title: {
+        type: String,
+        trim: true,
+        default: "Developer"
+    },
     email: {
         type: String,
         required: [true, "Please provide candidate's email"],

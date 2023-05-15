@@ -26,7 +26,8 @@ import {
     JOB_APPLY_SUCCESSFUL,
     GET_CANDIDATE_JOBS_SUCCESS,
     SAVE_JOB_SUCCESS,
-    GET_SAVED_JOBS_SUCCESS
+    GET_SAVED_JOBS_SUCCESS,
+    APPLICANT_DETAILS_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -256,6 +257,13 @@ const reducer = (state, action) => {
             isLoading: false,
             savedJobs: action.payload.jobs,
             savedJobsCount: action.payload.count
+        }
+    }
+
+    if (action.type === APPLICANT_DETAILS_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false
         }
     }
 }

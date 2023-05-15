@@ -8,6 +8,7 @@ import {
 import moment from "moment";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
+import Applicant from "./Applicant";
 
 const JobDetails = ({ job }) => {
   const { user, token, logoutUser, applyForJob, saveJob } = useAppContext();
@@ -104,19 +105,29 @@ const JobDetails = ({ job }) => {
               <div className="job-desc">{jobDescription}</div>
             </div>
           </div>
-          <div className="action-btn">
-            <button
-              className={
-                isApplied === -1 ? "apply-btn btn" : "apply-btn btn disabled"
-              }
-              type="button"
-              disabled={isApplied === -1 ? false : true}
-              onClick={handleApply}
-            >
-              {isApplied === -1 ? "Apply" : "Applied"}
-            </button>
-          </div>
+          {user?.userRole === "client" ? null : (
+            <div className="action-btn">
+              <button
+                className={
+                  isApplied === -1 ? "apply-btn btn" : "apply-btn btn disabled"
+                }
+                type="button"
+                disabled={isApplied === -1 ? false : true}
+                onClick={handleApply}
+              >
+                {isApplied === -1 ? "Apply" : "Applied"}
+              </button>
+            </div>
+          )}
           <div className="job-created-at">{date}</div>
+          {user?.userRole === "client" && (
+            <div className="applicants-list-container">
+              <h3>Applicants List</h3>
+              {job?.applicants.map((id) => (
+                <Applicant key={id} applicantId={id} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
