@@ -21,10 +21,13 @@ a {
     text-decoration: none;
     font-size: 1.5rem;
     color: $primaryColor;
-    margin: 0 0.5rem;
+    margin: 0 0.5em;
     display: inline-block;
     span {
         color: $secondaryColor;
+    }
+    @media (max-width: $md) {
+        font-size: 1rem;
     }
 }
 
@@ -43,7 +46,8 @@ label {
     font-weight: 500;
 }
 
-ul {
+ul,
+li {
     list-style-type: none;
 }
 .link.header-link {

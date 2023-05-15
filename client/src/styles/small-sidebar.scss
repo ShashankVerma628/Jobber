@@ -4,11 +4,12 @@
     align-items: center;
     transition: all 0.3s ease-in-out;
     min-height: 100vh;
-    position: absolute;
+    position: fixed;
     background-color: $whiteColor;
     width: 100%;
     z-index: 99;
     transform: translate(-100%);
+    top: 0;
 
     &.active {
         transform: translate(0);

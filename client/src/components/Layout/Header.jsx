@@ -1,9 +1,10 @@
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
+import Profile from "./Profile";
 
 const Header = () => {
-  const { user, logoutUser } = useAppContext();
+  const { user } = useAppContext();
   return (
     <div className="header-container">
       <div className="logo-container">
@@ -20,21 +21,10 @@ const Header = () => {
         </div>
         <div className="header-right-container">
           {user ? (
-            <div className="profile-container">
-              <div className="profile">
-                <span className="profile-name">{user?.name.charAt(0)}</span>
-                {user?.name}
-              </div>
-              <button
-                onClick={logoutUser}
-                className="btn header-btn btn-primary"
-              >
-                Logout
-              </button>
-            </div>
+            <Profile />
           ) : (
             <Link to="/login" className="btn header-btn btn-primary">
-              Login / Register
+              Login
             </Link>
           )}
         </div>

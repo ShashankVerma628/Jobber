@@ -25,6 +25,10 @@
         @media (max-width: $md) {
             grid-template-columns: 1fr 2fr;
         }
+
+        @media (max-width: $sm) {
+            grid-template-columns: 1fr;
+        }
     }
 
     .page-right-wrapper {

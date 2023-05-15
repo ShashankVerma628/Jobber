@@ -2,7 +2,7 @@
     border-bottom: 2px solid $grayColor;
     display: flex;
     gap: 2rem;
-    padding: 0 2em;
+    padding-left: 2em;
     align-items: center;
 
     & * {
@@ -17,38 +17,100 @@
         width: 90%;
         display: flex;
         justify-content: space-between;
-        gap: 2rem;
         align-items: center;
         a {
             height: 100%;
             padding: 0.6em 0.4em;
             margin: 0 0.2em;
         }
+
+        @media (max-width: $lg) {
+            gap: 1em;
+        }
+
+        @media (max-width: $md) {
+            width: unset;
+        }
     }
 
     .header-right-container {
         .profile-container {
-            display: flex;
-            gap: 1em;
-            align-items: center;
-
+            cursor: pointer;
             .profile {
+                border: 5px solid $whiteColor;
+                background-color: $primaryColor;
+                color: $whiteColor;
+                padding: 0.5em 1em;
+                margin: 0.5em 0;
                 display: flex;
-                gap: 0.5em;
+                gap: 0.4em;
                 align-items: center;
+                border-radius: 10px;
+
+                @media(max-width : $md){
+                    justify-content: space-between;
+                }
+
+                &:hover {
+                    border: 5px solid $primaryColorLight;
+                }
                 .profile-name {
-                    background-color: $secondaryColor;
-                    width: 30px;
-                    height: 30px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background-color: $secondaryColorDark;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: $whiteColor;
-                    font-weight: 500;
-                    font-size: 1.2rem;
-                    border-radius: 50%;
+                }
+
+                .profile-full-name {
+                    @media (max-width: $md) {
+                        display: none;
+                    }
                 }
             }
+            .profile-body {
+                position: relative;
+                display: none;
+
+                &.active {
+                    z-index: 99;
+                    display: block;
+                }
+
+                .profile-body-list {
+                    min-height: 120px;
+                    height: 100%;
+                    background-color: $primaryColor;
+                    color: $whiteColor;
+                    position: absolute;
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    width: 100%;
+
+                    .profile-body-list-item {
+                        .profile-body-link {
+                            border: none;
+                            outline: none;
+                            font-size: 1rem;
+                            display: block;
+                            background: transparent;
+                            color: $whiteColor;
+                            cursor: pointer;
+                            border-top: 1px solid $grayColor;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            @media (max-width: $md) {
+                width: 100px;
+            }
         }
+    }
+    @media (max-width: $md) {
+        justify-content: space-between;
     }
 }
