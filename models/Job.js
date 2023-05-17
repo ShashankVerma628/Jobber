@@ -48,6 +48,10 @@ const JobSchema = new mongoose.Schema({
     likes: {
         type: [String],
         default: []
+    },
+    acceptedCandidates: {
+        type: [String],
+        default: []
     }
 }, { timestamps: true });
 

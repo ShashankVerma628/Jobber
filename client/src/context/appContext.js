@@ -372,6 +372,30 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    // to accept a candidate
+    const acceptCandidate = async (jobId, candidateId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            await authFetch.patch(`/jobs/accept/${jobId}`, { candidateId });
+            getSingleJob(jobId);
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+
+    }
+
+    // to reject a candidate
+    const rejectCandidate = async (jobId, candidateId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            await authFetch.patch(`/jobs/reject/${jobId}`, { candidateId });
+            getSingleJob(jobId);
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+
+    }
+
 
     return <appContext.Provider value={{
         ...state,
@@ -397,7 +421,9 @@ const AppProvider = ({ children }) => {
         getCandidateJobs,
         saveJob,
         getSavedJobs,
-        getApplicant
+        getApplicant,
+        acceptCandidate,
+        rejectCandidate
     }}>
         {children}
     </appContext.Provider>

@@ -15,6 +15,8 @@ const getAllJobs = async (req, res) => {
 const getJobs = async (req, res) => {
     const { clientId } = req.params;
 
+    checkClientPermissions(req.user, clientId);
+
     const jobs = await Job.find({ createdBy: clientId }).sort({ createdAt: -1 });
 
     res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
@@ -173,4 +175,47 @@ const getSavedJobs = async (req, res) => {
     res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 }
 
-export { getAllJobs, getSingleJob, createJob, editJob, applyForJob, deleteJob, getJobs, getCandidateJobs, saveJob, getSavedJobs };
+const acceptCandidate = async (req, res) => {
+    const { jobId } = req.params;
+    const { candidateId } = req.body;
+
+    const job = await Job.findById(jobId);
+    checkClientPermissions(req.user, job.createdBy);
+
+    if (!job) {
+        throw new NotFoundError("Could not find this job");
+    }
+
+    const index = job.acceptedCandidates.findIndex((id) => id === String(candidateId));
+
+    if (index === -1 || job.acceptedCandidates.length === 0) {
+        job.acceptedCandidates.push(candidateId);
+        job.applicants = job.applicants.filter((id) => id !== String(candidateId));
+        await job.save();
+    }
+
+    res.status(StatusCodes.OK).json({ job });
+}
+
+const rejectCandidate = async (req, res) => {
+    const { jobId } = req.params;
+    const { candidateId } = req.body;
+
+    const job = await Job.findById(jobId);
+    checkClientPermissions(req.user, job.createdBy);
+
+    if (!job) {
+        throw new NotFoundError("Could not find this job");
+    }
+
+    const index = job.applicants.findIndex((id) => id === String(candidateId));
+
+    if (index !== -1) {
+        job.applicants = job.applicants.filter((id) => id !== String(candidateId));
+        await job.save();
+    }
+
+    res.status(StatusCodes.OK).json({ job });
+}
+
+export { getAllJobs, getSingleJob, createJob, editJob, applyForJob, deleteJob, getJobs, getCandidateJobs, saveJob, getSavedJobs, acceptCandidate, rejectCandidate };

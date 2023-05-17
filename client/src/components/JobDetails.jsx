@@ -124,7 +124,7 @@ const JobDetails = ({ job }) => {
             <div className="applicants-list-container">
               <h3>Applicants List</h3>
               {job?.applicants.map((id) => (
-                <Applicant key={id} applicantId={id} />
+                <Applicant key={id} jobId={job?._id} applicantId={id} />
               ))}
             </div>
           )}
