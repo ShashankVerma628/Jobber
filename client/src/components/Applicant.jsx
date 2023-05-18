@@ -3,7 +3,7 @@ import { useAppContext } from "../context/appContext";
 import Loader from "./Layout/Loader";
 import { Link } from "react-router-dom";
 
-const Applicant = ({ applicantId, jobId }) => {
+const Applicant = ({ applicantId, jobId, showButton }) => {
   const { isLoading, getApplicant, acceptCandidate, rejectCandidate } =
     useAppContext();
   const [applicant, setApplicant] = useState(null);
@@ -44,20 +44,22 @@ const Applicant = ({ applicantId, jobId }) => {
               </Link>
             </div>
           </div>
-          <div className="action-btn-container">
-            <button
-              className="btn action-btn accept-btn"
-              onClick={handleAcceptCandidate}
-            >
-              Accept
-            </button>
-            <button
-              className="btn action-btn reject-btn"
-              onClick={handleRejectCandidate}
-            >
-              Reject
-            </button>
-          </div>
+          {showButton && (
+            <div className="action-btn-container">
+              <button
+                className="btn action-btn accept-btn"
+                onClick={handleAcceptCandidate}
+              >
+                Accept
+              </button>
+              <button
+                className="btn action-btn reject-btn"
+                onClick={handleRejectCandidate}
+              >
+                Reject
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );

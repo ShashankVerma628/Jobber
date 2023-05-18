@@ -22,8 +22,38 @@
         display: grid;
         grid-template-columns: 1fr 3fr;
 
+        .stats-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1em;
+
+            .stats-container {
+                color: $whiteColor;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                padding: 1.5em;
+                border-radius: 10px;
+                background-color: $primaryColorDark;
+
+                .stats-value {
+                    font-size: 2rem;
+                }
+
+                .stats-text {
+                    font-size: 1.5rem;
+                    display: flex;
+                    gap: 0.5em;
+                    align-items: center;
+                }
+            }
+        }
+
         @media (max-width: $md) {
             grid-template-columns: 1fr 2fr;
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: $sm) {

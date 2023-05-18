@@ -122,8 +122,9 @@ const applyForJob = async (req, res) => {
     }
 
     const index = job.applicants.findIndex((id) => id === String(req.user.userId));
+    const acceptedIndex = job.acceptedCandidates.findIndex((id) => id === String(req.user.userId));
 
-    if (index !== -1) {
+    if (index !== -1 || acceptedIndex !== -1) {
         throw new BadRequestError("You have already applied for this job");
     }
     job.applicants.push(String(req.user.userId));

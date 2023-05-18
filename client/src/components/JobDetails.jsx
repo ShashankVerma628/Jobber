@@ -12,7 +12,12 @@ import Applicant from "./Applicant";
 
 const JobDetails = ({ job }) => {
   const { user, token, logoutUser, applyForJob, saveJob } = useAppContext();
-  const isApplied = job?.applicants.findIndex((id) => id === user?._id);
+  const isApplied = job?.applicants?.findIndex(
+    (id) => id.toString() === user?._id.toString()
+  );
+  const isSelected = job?.acceptedCandidates?.findIndex(
+    (id) => id.toString() === user?._id.toString()
+  );
   const isSaved = job?.likes.findIndex(
     (id) => id?.toString() === user?._id.toString()
   );
@@ -109,24 +114,50 @@ const JobDetails = ({ job }) => {
             <div className="action-btn">
               <button
                 className={
-                  isApplied === -1 ? "apply-btn btn" : "apply-btn btn disabled"
+                  isApplied < 0 && isSelected < 0
+                    ? "apply-btn btn"
+                    : "apply-btn btn disabled"
                 }
                 type="button"
-                disabled={isApplied === -1 ? false : true}
+                disabled={isApplied < 0 && isSelected < 0 ? false : true}
                 onClick={handleApply}
               >
-                {isApplied === -1 ? "Apply" : "Applied"}
+                {isApplied < 0 && isSelected < 0 ? "Apply" : "Applied"}
               </button>
             </div>
           )}
           <div className="job-created-at">{date}</div>
           {user?.userRole === "client" && (
-            <div className="applicants-list-container">
-              <h3>Applicants List</h3>
-              {job?.applicants.map((id) => (
-                <Applicant key={id} jobId={job?._id} applicantId={id} />
-              ))}
-            </div>
+            <>
+              <div className="applicants-list-container">
+                {job?.applicants?.length === 0 ? (
+                  <h3>No applicants yet</h3>
+                ) : (
+                  <h3>Applicants List</h3>
+                )}
+                {job?.applicants?.map((id) => (
+                  <Applicant key={id} jobId={job?._id} applicantId={id} />
+                ))}
+              </div>
+              <div
+                className="applicants-list-container"
+                style={{ marginTop: "2em" }}
+              >
+                {job?.acceptedCandidates?.length === 0 ? (
+                  <h3>No Accepted Applicants yet</h3>
+                ) : (
+                  <h3>Accepted Applicants</h3>
+                )}
+                {job?.savedCandidates?.map((id) => (
+                  <Applicant
+                    key={id}
+                    jobId={job?._id}
+                    applicantId={id}
+                    showButton={false}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
