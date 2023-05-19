@@ -27,7 +27,9 @@ import {
     GET_CANDIDATE_JOBS_SUCCESS,
     SAVE_JOB_SUCCESS,
     GET_SAVED_JOBS_SUCCESS,
-    APPLICANT_DETAILS_SUCCESS
+    APPLICANT_DETAILS_SUCCESS,
+    CANDIDATE_EDIT_PROFILE_SUCCESS,
+    SET_CANDIDATE_PROFILE_FORM_DATA
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -67,6 +69,13 @@ const reducer = (state, action) => {
         return {
             ...state,
             jobFormData: action.payload.values,
+        }
+    }
+
+    if (action.type === SET_CANDIDATE_PROFILE_FORM_DATA) {
+        return {
+            ...state,
+            candidateProfileData: action.payload.values,
         }
     }
 
@@ -264,6 +273,17 @@ const reducer = (state, action) => {
         return {
             ...state,
             isLoading: false
+        }
+    }
+
+    if (action.type === CANDIDATE_EDIT_PROFILE_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            showAlert: true,
+            alertType: "success",
+            alertText: "Profile has been updated successfully",
+            user: action.payload.user
         }
     }
 }

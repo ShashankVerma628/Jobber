@@ -16,6 +16,7 @@ import notFoundMiddleware from "./middleware/not-found.js";
 import authRouter from "./routes/auth-routes.js";
 import jobsRouter from "./routes/jobs-routes.js";
 import clientRouter from "./routes/client-routes.js";
+import candidateRouter from "./routes/candidate-routes.js";
 
 // middleware
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use(cors());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", jobsRouter);
 app.use("/api/v1/clients", clientRouter);
+app.use("/api/v1/candidates", candidateRouter);
 
 // Your code
 if (process.env.NODE_ENV === "PRODUCTION") {

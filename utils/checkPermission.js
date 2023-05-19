@@ -7,5 +7,12 @@ const checkClientPermissions = (user, resourceUserId) => {
 
     throw new UnauthenticatedError("You are not authorized to perform this action");
 }
+const checkCandidatePermissions = (user, resourceUserId) => {
+    if (user.userId.toString() === resourceUserId.toString() && user.userRole === "candidate") {
+        return;
+    }
 
-export { checkClientPermissions };
+    throw new UnauthenticatedError("You are not authorized to perform this action");
+}
+
+export { checkClientPermissions, checkCandidatePermissions };

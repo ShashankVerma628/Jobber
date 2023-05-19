@@ -35,6 +35,69 @@ const CandidateSchema = new mongoose.Schema({
     userRole: {
         type: String,
         default: "candidate"
+    },
+    workExperience: [
+        {
+            startDate: {
+                type: Date,
+                required: [true, "Please provide the date you started on"]
+            },
+            endDate: {
+                type: Date,
+            },
+            companyName: {
+                type: String,
+                required: [true, "Please provide the company name"]
+            },
+            skillsUsed: {
+                type: [String],
+                required: [true, "Please provide skills used"]
+            },
+            description: {
+                type: String,
+                required: [true, "Please provide some description"]
+            }
+        }
+    ],
+    education: [
+        {
+            startDate: {
+                type: Date,
+                required: [true, "Please provide the date you started on"]
+            },
+            endDate: {
+                type: Date,
+            },
+            collegeName: {
+                type: String,
+                required: [true, "Please provide the company name"]
+            },
+            description: {
+                type: String,
+                required: [true, "Please provide some description"]
+            }
+        }
+    ],
+    skills: {
+        type: [String]
+    },
+    languages: {
+        type: [String]
+    },
+    address: {
+        type: String,
+    },
+    contactNumber: {
+        type: String
+    },
+    githubLink: {
+        type: String,
+    },
+    twitterLink: {
+        type: String,
+    },
+    linkedinLink: {
+        type: String,
     }
 }, { timestamps: true });
 

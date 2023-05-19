@@ -29,7 +29,9 @@ import {
     GET_CANDIDATE_JOBS_SUCCESS,
     SAVE_JOB_SUCCESS,
     GET_SAVED_JOBS_SUCCESS,
-    APPLICANT_DETAILS_SUCCESS
+    APPLICANT_DETAILS_SUCCESS,
+    CANDIDATE_EDIT_PROFILE_SUCCESS,
+    SET_CANDIDATE_PROFILE_FORM_DATA
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -58,6 +60,21 @@ const initialJobFormData = {
     salary: ""
 };
 
+const initialCandidateProfileData = {
+    name: user?.name || "",
+    title: user?.title || "",
+    email: user?.email || "",
+    workExperience: user?.workExperience || "",
+    education: user?.education || "",
+    skills: user?.skills || "",
+    languages: user?.languages || "",
+    address: user?.address || "",
+    contactNumber: user?.contactNumber || "",
+    githubLink: user?.githubLink || "",
+    twitterLink: user?.twitterLink || "",
+    linkedinLink: user?.linkedinLink || "",
+};
+
 const initialState = {
     isLoading: false,
     showAlert: false,
@@ -77,7 +94,8 @@ const initialState = {
     candidateJobs: [],
     candidateJobsCount: 0,
     savedJobs: [],
-    savedJobsCount: 0
+    savedJobsCount: 0,
+    candidateProfileData: initialCandidateProfileData
 };
 
 const appContext = createContext();
@@ -102,7 +120,7 @@ const AppProvider = ({ children }) => {
     }, (error) => {
         if (error.response.status === 401) {
             console.log(error);
-            logoutUser();
+            // logoutUser();
         }
         return Promise.reject(error);
     });
@@ -140,6 +158,10 @@ const AppProvider = ({ children }) => {
 
     const setJobFormData = (values) => {
         dispatch({ type: SET_JOB_FORM_DATA, payload: { values } })
+    }
+
+    const setCandidateProfileData = (values) => {
+        dispatch({ type: SET_CANDIDATE_PROFILE_FORM_DATA, payload: { values } })
     }
 
 
@@ -396,6 +418,19 @@ const AppProvider = ({ children }) => {
 
     }
 
+    // edit candidate profile
+    const editCandidateProfile = async (candidateId, profileData) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await authFetch.patch(`/candidates/edit-profile/${candidateId}`, profileData);
+            const { user } = data;
+            dispatch({ type: CANDIDATE_EDIT_PROFILE_SUCCESS, payload: user });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+        clearAlert();
+    }
+
 
     return <appContext.Provider value={{
         ...state,
@@ -423,7 +458,9 @@ const AppProvider = ({ children }) => {
         getSavedJobs,
         getApplicant,
         acceptCandidate,
-        rejectCandidate
+        rejectCandidate,
+        editCandidateProfile,
+        setCandidateProfileData
     }}>
         {children}
     </appContext.Provider>
@@ -433,4 +470,4 @@ const useAppContext = () => {
     return useContext(appContext);
 }
 
-export { initialState, AppProvider, useAppContext, initialAuthFormData, initialAuthClientFormData, initialJobFormData }; 
+export { initialState, AppProvider, useAppContext, initialAuthFormData, initialAuthClientFormData, initialJobFormData, initialCandidateProfileData }; 

@@ -5,6 +5,7 @@
         .name-container {
             display: flex;
             justify-content: space-between;
+            gap: 1rem;
         }
         .form-input-container {
             margin: 1rem 0;
@@ -15,10 +16,19 @@
                 padding: 0.8em 1em;
                 border-radius: 5px;
                 outline: none;
+
                 border: 1px solid $grayColorDark;
+
+                &.disabled {
+                    cursor: not-allowed;
+                }
             }
             &.half {
                 width: 45%;
+                display: inline-block;
+            }
+            &.small {
+                width: 30%;
                 display: inline-block;
             }
         }
