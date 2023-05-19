@@ -283,7 +283,6 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: "success",
             alertText: "Profile has been updated successfully",
-            user: action.payload.user
         }
     }
 }

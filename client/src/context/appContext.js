@@ -424,6 +424,7 @@ const AppProvider = ({ children }) => {
         try {
             const { data } = await authFetch.patch(`/candidates/edit-profile/${candidateId}`, profileData);
             const { user } = data;
+            localStorage.setItem("user", JSON.stringify(user));
             dispatch({ type: CANDIDATE_EDIT_PROFILE_SUCCESS, payload: user });
         } catch (error) {
             dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
