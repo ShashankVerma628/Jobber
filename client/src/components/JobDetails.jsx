@@ -12,15 +12,11 @@ import Applicant from "./Applicant";
 
 const JobDetails = ({ job }) => {
   const { user, token, logoutUser, applyForJob, saveJob } = useAppContext();
-  const isApplied = job?.applicants?.findIndex(
-    (id) => id.toString() === user?._id.toString()
-  );
+  const isApplied = job?.applicants?.findIndex((id) => id === user?._id);
   const isSelected = job?.acceptedCandidates?.findIndex(
-    (id) => id.toString() === user?._id.toString()
+    (id) => id === user?._id
   );
-  const isSaved = job?.likes.findIndex(
-    (id) => id?.toString() === user?._id.toString()
-  );
+  const isSaved = job?.likes.findIndex((id) => id === user?._id);
 
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
