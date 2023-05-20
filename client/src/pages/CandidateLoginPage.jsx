@@ -73,11 +73,6 @@ const LoginPage = () => {
                 Candidate
               </Link>
             </li>
-            <li className="options">
-              <Link to="/admin/login" className="options-link">
-                Admin
-              </Link>
-            </li>
           </ul>
         </div>
         <AuthForm handleSubmit={handleSubmit} signUp={signUp} />

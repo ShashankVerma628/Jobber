@@ -1,5 +1,5 @@
 import { Header, Footer, AllJobs, AddJob, Profile, ClientStats, EditJob, AllCandidateJobs, SavedJobs, CandidateProfile } from "./components";
-import { JobSearchPage, ClientLoginPage, ErrorPage, CandidateLoginPage, IntroPage, AdminLoginPage, ClientSharedLayout, JobDetailsPage, CandidateSharedLayout } from "./pages";
+import { JobSearchPage, ClientLoginPage, ErrorPage, CandidateLoginPage, IntroPage, ClientSharedLayout, JobDetailsPage, CandidateSharedLayout } from "./pages";
 
 import ProtectedClientRoute from "./utils/ProtectedClientRoute";
 import ProtectedCandidateRoute from "./utils/ProtectedCandidateRoute";
@@ -15,7 +15,6 @@ function App() {
           <Route path="/" element={<JobSearchPage />} />
           <Route path="/login" element={<CandidateLoginPage />} />
           <Route path="/client/login" element={<ClientLoginPage />} />
-          <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/why-jobber" element={<IntroPage />} />
           <Route path="/dashboard/" element={
             <ProtectedCandidateRoute>

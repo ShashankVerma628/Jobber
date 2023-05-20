@@ -75,11 +75,6 @@ const ClientLoginPage = () => {
                 Candidate
               </Link>
             </li>
-            <li className="options">
-              <Link to="/admin/login" className="options-link">
-                Admin
-              </Link>
-            </li>
           </ul>
         </div>
         <AuthClientForm handleSubmit={handleSubmit} signUp={signUp} />
