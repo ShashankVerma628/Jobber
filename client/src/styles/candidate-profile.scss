@@ -1,0 +1,87 @@
+.resume-container {
+    .profile-container {
+        display: flex;
+        gap: 0.5em;
+        align-items: center;
+        .profile-image {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            padding: 0.5em;
+            background-color: $primaryColorDark;
+            color: $whiteColor;
+            border-radius: 50%;
+        }
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+    }
+
+    .resume-cover-details {
+        h3 {
+            text-align: left;
+            color: $primaryColorDark;
+            font-weight: 600;
+            margin-bottom: 1em;
+        }
+        .perks-container {
+            margin: 1.5em 0;
+
+            .perks-list {
+                display: flex;
+                gap: 0.5em;
+                flex-wrap: wrap;
+                .perk {
+                    padding: 0.5em;
+                    border-radius: 10px;
+                    background-color: $secondaryColorDark;
+                    color: $whiteColor;
+
+                    &.lang {
+                        color: #000000;
+                        background-color: $grayColor;
+                    }
+                }
+            }
+        }
+
+        .social-links-container {
+            .social-list {
+                display: flex;
+                gap: 0.5em;
+                flex-wrap: wrap;
+
+                .social-item {
+                    cursor: pointer;
+                    .social-link {
+                        color: $primaryColorDark;
+                        &:hover {
+                            color: $primaryColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .resume-cover-details {
+        margin-top: 1em;
+        .details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1em;
+            & > div {
+                display: flex;
+                gap: 0.5em;
+                align-items: center;
+                & svg {
+                    color: $primaryColorDark;
+                }
+            }
+        }
+    }
+}

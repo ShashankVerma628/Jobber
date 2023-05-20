@@ -1,6 +1,6 @@
 import { checkCandidatePermissions } from "../utils/checkPermission.js";
 import Candidate from "../models/Candidate.js";
-import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import { BadRequestError, NotFoundError, UnauthenticatedError } from "../errors/index.js";
 import StatusCodes from "http-status-codes";
 
 const editProfile = async (req, res) => {
@@ -21,4 +21,17 @@ const editProfile = async (req, res) => {
     res.status(StatusCodes.OK).json({ user: updatedCandidate });
 }
 
-export { editProfile };
+const getCandidateDetails = async (req, res) => {
+    const { candidateId } = req.params;
+
+    const candidate = await Candidate.findById(candidateId);
+
+    if (!candidate) {
+        throw new NotFoundError("Could not find the candidate");
+    }
+
+    candidate.password = undefined;
+    res.status(StatusCodes.OK).json({ candidate });
+}
+
+export { editProfile, getCandidateDetails };

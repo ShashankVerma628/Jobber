@@ -27,7 +27,8 @@ import {
     SAVE_JOB_SUCCESS,
     GET_SAVED_JOBS_SUCCESS,
     CANDIDATE_EDIT_PROFILE_SUCCESS,
-    SET_CANDIDATE_PROFILE_FORM_DATA
+    SET_CANDIDATE_PROFILE_FORM_DATA,
+    GET_CANDIDATE_PROFILE_DATA_SUCCESS
 } from "./actions";
 
 const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -93,7 +94,8 @@ const initialState = {
     candidateJobsCount: 0,
     savedJobs: [],
     savedJobsCount: 0,
-    candidateProfileData: initialCandidateProfileData
+    candidateProfileData: initialCandidateProfileData,
+    candidateData: null
 };
 
 const appContext = createContext();
@@ -437,6 +439,18 @@ const AppProvider = ({ children }) => {
     }
 
 
+    // to get profile data of a candidate
+    const getCandidateProfileData = async (candidateId) => {
+        dispatch({ type: API_REQUEST_BEGIN });
+        try {
+            const { data } = await axios.get(`/api/v1/candidates/${candidateId}`);
+            const { candidate } = data;
+            dispatch({ type: GET_CANDIDATE_PROFILE_DATA_SUCCESS, payload: data });
+        } catch (error) {
+            dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });
+        }
+    }
+
     return <appContext.Provider value={{
         ...state,
         setAuthFormData,
@@ -465,7 +479,8 @@ const AppProvider = ({ children }) => {
         acceptCandidate,
         rejectCandidate,
         editCandidateProfile,
-        setCandidateProfileData
+        setCandidateProfileData,
+        getCandidateProfileData
     }}>
         {children}
     </appContext.Provider>

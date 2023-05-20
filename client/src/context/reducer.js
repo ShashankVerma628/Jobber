@@ -26,7 +26,8 @@ import {
     GET_SAVED_JOBS_SUCCESS,
     APPLICANT_DETAILS_SUCCESS,
     CANDIDATE_EDIT_PROFILE_SUCCESS,
-    SET_CANDIDATE_PROFILE_FORM_DATA
+    SET_CANDIDATE_PROFILE_FORM_DATA,
+    GET_CANDIDATE_PROFILE_DATA_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -282,6 +283,14 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: "success",
             alertText: "Profile has been updated successfully",
+        }
+    }
+
+    if (action.type === GET_CANDIDATE_PROFILE_DATA_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            candidateData: action.payload.candidate
         }
     }
 }

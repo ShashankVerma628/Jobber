@@ -6,5 +6,6 @@ import ErrorPage from "./ErrorPage";
 import CandidateSharedLayout from "./CandidateSharedLayout";
 import ClientSharedLayout from "./ClientSharedLayout";
 import JobDetailsPage from "./JobDetailsPage";
+import CandidateProfilePage from "./CandidateProfilePage";
 
-export { JobSearchPage, CandidateLoginPage, ClientLoginPage, IntroPage, CandidateSharedLayout, ErrorPage, ClientSharedLayout, JobDetailsPage };
+export { JobSearchPage, CandidateLoginPage, ClientLoginPage, IntroPage, CandidateSharedLayout, ErrorPage, ClientSharedLayout, JobDetailsPage, CandidateProfilePage };

@@ -65,7 +65,7 @@ const CandidateProfile = () => {
             />
             <FormInput
               labelText="Job Title"
-              name="position"
+              name="title"
               type="text"
               onInputChange={handleInputChange}
               value={candidateProfileData?.title}
