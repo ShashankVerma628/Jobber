@@ -4,7 +4,6 @@ import Alert from "../Alert";
 import Loader from "../Layout/Loader";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
-import { useEffect } from "react";
 
 const CandidateProfile = () => {
   const {

@@ -5,8 +5,6 @@ import {
   FaSuitcase,
   FaEdit,
   FaTrash,
-  FaHeart,
-  FaRegHeart,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";

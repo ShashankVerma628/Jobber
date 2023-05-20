@@ -2,7 +2,7 @@ import AddJobForm from "../Form/AddJobForm";
 import { useAppContext } from "../../context/appContext";
 
 const AddJob = () => {
-  const { jobFormData, displayAlert, addJob, clearJobForm } = useAppContext();
+  const { jobFormData, displayAlert, addJob } = useAppContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();

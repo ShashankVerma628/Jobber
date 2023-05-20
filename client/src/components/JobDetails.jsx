@@ -17,6 +17,7 @@ const JobDetails = ({ job }) => {
     (id) => id === user?._id
   );
   const isSaved = job?.likes.findIndex((id) => id === user?._id);
+  console.log(job);
 
   let date = moment(job?.createdAt);
   date = date.format("MMM Do, YYYY");
@@ -132,7 +133,12 @@ const JobDetails = ({ job }) => {
                   <h3>Applicants List</h3>
                 )}
                 {job?.applicants?.map((id) => (
-                  <Applicant key={id} jobId={job?._id} applicantId={id} />
+                  <Applicant
+                    showButton={true}
+                    key={id}
+                    jobId={job?._id}
+                    applicantId={id}
+                  />
                 ))}
               </div>
               <div
@@ -144,7 +150,7 @@ const JobDetails = ({ job }) => {
                 ) : (
                   <h3>Accepted Applicants</h3>
                 )}
-                {job?.savedCandidates?.map((id) => (
+                {job?.acceptedCandidates?.map((id) => (
                   <Applicant
                     key={id}
                     jobId={job?._id}

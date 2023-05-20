@@ -1,11 +1,18 @@
-import { FaBriefcase } from "react-icons/fa";
+import { FaBriefcase, FaUserAlt, FaUserCheck } from "react-icons/fa";
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
 import Loader from "../Layout/Loader";
 import Stats from "../Stats";
 
 const ClientStats = () => {
-  const { isLoading, getJobs, clientJobs, clientJobsCount } = useAppContext();
+  const {
+    isLoading,
+    getJobs,
+    clientJobs,
+    clientJobsCount,
+    totalApplicantsCount,
+    totalAcceptedApplicantsCount,
+  } = useAppContext();
 
   useEffect(() => {
     getJobs();
@@ -35,9 +42,14 @@ const ClientStats = () => {
               value={clientJobsCount}
             />
             <Stats
-              icon={<FaBriefcase />}
-              text="Total Jobs"
-              value={clientJobsCount}
+              icon={<FaUserAlt />}
+              text="Total Applicants"
+              value={totalApplicantsCount}
+            />
+            <Stats
+              icon={<FaUserCheck />}
+              text="Total Selected Applicants"
+              value={totalAcceptedApplicantsCount}
             />
           </div>
         </div>

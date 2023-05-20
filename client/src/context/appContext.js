@@ -7,8 +7,6 @@ import {
     DISPLAY_ALERT,
     API_REQUEST_BEGIN,
     API_REQUEST_ERROR,
-    ADMIN_REGISTER_SUCCESS,
-    ADMIN_LOGIN_SUCCESS,
     CLIENT_LOGIN_SUCCESS,
     CLIENT_REGISTER_SUCCESS,
     CANDIDATE_LOGIN_SUCCESS,
@@ -18,7 +16,6 @@ import {
     LOGOUT_USER,
     SET_JOB_FORM_DATA,
     ADD_JOB_SUCCESS,
-    GET_CLIENT_JOBS_SUCCESS,
     GET_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
     GET_SINGLE_JOB_SUCCESS,
@@ -29,7 +26,6 @@ import {
     GET_CANDIDATE_JOBS_SUCCESS,
     SAVE_JOB_SUCCESS,
     GET_SAVED_JOBS_SUCCESS,
-    APPLICANT_DETAILS_SUCCESS,
     CANDIDATE_EDIT_PROFILE_SUCCESS,
     SET_CANDIDATE_PROFILE_FORM_DATA
 } from "./actions";
@@ -89,6 +85,8 @@ const initialState = {
     allJobsCount: 0,
     clientJobs: [],
     clientJobsCount: 0,
+    totalApplicantsCount: 0,
+    totalAcceptedApplicantsCount: 0,
     singleJob: null,
     clientDetails: null,
     candidateJobs: [],
@@ -260,7 +258,13 @@ const AppProvider = ({ children }) => {
         try {
             const { data } = await authFetch.get(`/jobs/client/${state.user?._id}`);
             const { count, jobs } = data;
-            dispatch({ type: GET_JOBS_SUCCESS, payload: { jobs, count } });
+            let applicantsCount = 0;
+            let acceptedApplicantsCount = 0;
+            jobs.map((job) => {
+                applicantsCount += job?.applicants.length;
+                acceptedApplicantsCount += job?.acceptedCandidates.length;
+            });
+            dispatch({ type: GET_JOBS_SUCCESS, payload: { jobs, count, applicantsCount, acceptedApplicantsCount } });
         } catch (error) {
             console.log(error);
             dispatch({ type: API_REQUEST_ERROR, payload: { message: error.response.data.message } });

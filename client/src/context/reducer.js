@@ -5,8 +5,6 @@ import {
     DISPLAY_ALERT,
     API_REQUEST_BEGIN,
     API_REQUEST_ERROR,
-    ADMIN_REGISTER_SUCCESS,
-    ADMIN_LOGIN_SUCCESS,
     CLIENT_LOGIN_SUCCESS,
     CLIENT_REGISTER_SUCCESS,
     CANDIDATE_LOGIN_SUCCESS,
@@ -16,7 +14,6 @@ import {
     SET_JOB_FORM_DATA,
     ADD_JOB_SUCCESS,
     GET_JOBS_SUCCESS,
-    GET_CLIENT_JOBS_SUCCESS,
     GET_ALL_JOBS_SUCCESS,
     SET_AUTH_CLIENT_FORM_DATA,
     GET_SINGLE_JOB_SUCCESS,
@@ -201,7 +198,9 @@ const reducer = (state, action) => {
             ...state,
             isLoading: false,
             clientJobs: action.payload.jobs,
-            clientJobsCount: action.payload.count
+            clientJobsCount: action.payload.count,
+            totalApplicantsCount: action.payload.applicantsCount,
+            totalAcceptedApplicantsCount: action.payload.acceptedApplicantsCount
         }
     }
 

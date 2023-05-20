@@ -24,7 +24,7 @@
 
         .stats-wrapper {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1em;
 
             .stats-container {
@@ -46,6 +46,13 @@
                     gap: 0.5em;
                     align-items: center;
                 }
+            }
+
+            @media (max-width: $md) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @media (max-width: $sm) {
+                grid-template-columns: 1fr;
             }
         }
 
