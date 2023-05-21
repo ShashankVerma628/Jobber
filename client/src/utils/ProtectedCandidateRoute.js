@@ -2,9 +2,9 @@ import { useAppContext } from "../context/appContext";
 import { Navigate } from "react-router-dom";
 
 const ProtectedClientRoute = ({ children }) => {
-    const { user, logoutUser } = useAppContext();
+    const { user, token, logoutUser } = useAppContext();
 
-    if (!user || user.userRole !== "candidate") {
+    if (!user || user.userRole !== "candidate" || !token) {
         logoutUser();
         return <Navigate to="/login" />
     }

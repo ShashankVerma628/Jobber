@@ -24,18 +24,12 @@ export const clientNavLinks = [
         path: '/client/dashboard/add-job',
         icon: <FaWpforms />,
     },
-    {
-        id: 4,
-        text: 'profile',
-        path: '/client/dashboard/profile',
-        icon: <ImProfile />,
-    },
 ]
 
 export const candidateNavLinks = [
     {
         id: 1,
-        text: 'all jobs',
+        text: 'applied jobs',
         path: '/dashboard',
         icon: <MdQueryStats />,
     },

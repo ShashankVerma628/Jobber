@@ -7,7 +7,6 @@ import FormButton from "./Form/FormButton";
 import Alert from "./Alert";
 import AuthForm from "./Form/AuthForm";
 import AddJob from "./Client/AddJob";
-import Profile from "./Client/Profile";
 import AllJobs from "./Client/AllJobs";
 import JobDetails from "./JobDetails";
 import ClientStats from "./Client/ClientStats";
@@ -23,4 +22,4 @@ import AllCandidateJobs from "./Candidate/AllCandidateJobs";
 import Applicant from "./Applicant";
 import Stats from "./Stats";
 
-export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, Profile, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm, ClientDetails, AllCandidateJobs, SavedJobs, CandidateProfile, Applicant, Stats };
+export { Footer, JobsList, Header, Logo, Loader, EditJob, FormInput, FormButton, Alert, AuthForm, AddJob, AllJobs, JobDetails, ClientStats, SmallSidebar, BigSidebar, AuthClientForm, ClientDetails, AllCandidateJobs, SavedJobs, CandidateProfile, Applicant, Stats };
